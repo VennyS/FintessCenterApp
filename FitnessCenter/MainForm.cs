@@ -15,6 +15,9 @@ namespace FitnessCenter
         public MainForm()
         {
             InitializeComponent();
+
+            Manager manager = new Manager();
+
         }
 
         private void showOnlyPanel(string target)
