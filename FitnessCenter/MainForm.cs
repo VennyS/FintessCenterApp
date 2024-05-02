@@ -19,14 +19,16 @@ namespace FitnessCenter
 
             Manager manager = new Manager();
             _clients = manager.GetClients();
+            ShowClientsContains();
         }
 
-        private void ShowClientsContains(string text = null)
+        private int ShowClientsContains(string text = "")
         {
             // Очищаем все предыдущие кнопки
             var buttons = searchResultsClientsPanel1.Controls.OfType<Button>().ToArray();
             foreach (Button button in buttons) searchResultsClientsPanel1.Controls.Remove(button);
 
+            int count = 0;
             int topMargin = 0; // отступ сверху для первой кнопки
 
             foreach (Client client in _clients)
@@ -35,14 +37,20 @@ namespace FitnessCenter
                 {
                     Button btn = new Button();
                     btn.Text = client.full_name;
+                    btn.Size = new Size(330, btn.Size.Height);
                     btn.Click += (sender, e) => ClientButton_Click(client);
                     btn.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
                     searchResultsClientsPanel1.Controls.Add(btn);
 
                     // Увеличиваем отступ сверху для следующей кнопки
                     topMargin += btn.Height + 5; // добавляем высоту кнопки и небольшой отступ
+                    count++;
                 }               
             }
+
+            if (count == 0) notFoundClientsLabel1.Visible = true;
+            else notFoundClientsLabel1.Visible = false;
+            return count;
         }
 
         private void ClientButton_Click(Client client)
