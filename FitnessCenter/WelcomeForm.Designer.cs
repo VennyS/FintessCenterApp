@@ -73,7 +73,6 @@ namespace FitnessCenter
             this.loginTextBox1.Size = new System.Drawing.Size(208, 25);
             this.loginTextBox1.TabIndex = 4;
             this.loginTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.loginTextBox1.UseSystemPasswordChar = true;
             this.loginTextBox1.Enter += new System.EventHandler(this.loginTextBox1_Enter);
             this.loginTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.loginTextBox1_KeyDown);
             this.loginTextBox1.Leave += new System.EventHandler(this.loginTextBox1_Leave);

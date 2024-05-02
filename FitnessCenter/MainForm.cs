@@ -35,15 +35,21 @@ namespace FitnessCenter
             {
                 if (client.full_name.ToLower().Contains(text.ToLower()))
                 {
-                    Button btn = new Button();
-                    btn.Text = client.full_name;
-                    btn.Size = new Size(330, btn.Size.Height);
-                    btn.Click += (sender, e) => ClientButton_Click(client);
-                    btn.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
-                    searchResultsClientsPanel1.Controls.Add(btn);
+                    Button btnClient = new Button();
+                    btnClient.Text = client.full_name;
+                    btnClient.Size = new Size(330, 22);
+                    btnClient.Click += (sender, e) => ClientButton_Click(client);
+                    btnClient.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
+                    Button deleteClient = new Button();
+                    deleteClient.Text = "Удалить";
+                    deleteClient.Size = new Size(94, 22);
+                    deleteClient.Click += (sender, e) => ClientButton_Click(client);
+                    deleteClient.Location = new Point(btnClient.Width+11, topMargin); // каждая кнопка размещается на новой строке
+                    searchResultsClientsPanel1.Controls.Add(btnClient);
+                    searchResultsClientsPanel1.Controls.Add(deleteClient);
 
                     // Увеличиваем отступ сверху для следующей кнопки
-                    topMargin += btn.Height + 5; // добавляем высоту кнопки и небольшой отступ
+                    topMargin += btnClient.Height + 5; // добавляем высоту кнопки и небольшой отступ
                     count++;
                 }               
             }
@@ -55,7 +61,9 @@ namespace FitnessCenter
 
         private void ClientButton_Click(Client client)
         {
-            MessageBox.Show($"Нажата кнопка для клиента: {client.full_name}");
+            showClientsPanel1.Visible = false;
+            setUpInfoPanel(client);
+            clientInfoPanel3.Visible = true;
         }
 
         private void showOnlyPanel(string target)
@@ -96,6 +104,7 @@ namespace FitnessCenter
         private void createClientsButton_Click(object sender, EventArgs e)
         {
             showClientsPanel1.Visible = false;
+            clientInfoPanel3.Visible = false;
             newClientPanel2.Visible = true;
             searchClientsTextBox.Text = "";
         }
@@ -103,6 +112,7 @@ namespace FitnessCenter
         private void backCreatingClientButton2_Click(object sender, EventArgs e)
         {
             showClientsPanel1.Visible = true;
+            clientInfoPanel3.Visible = false;
             newClientPanel2.Visible = false;
         }
 
@@ -110,10 +120,20 @@ namespace FitnessCenter
         private void newClientButton1_Click(object sender, EventArgs e)
         {
             showClientsPanel1.Visible = true;
+            clientInfoPanel3.Visible = false;
             newClientPanel2.Visible = false;
 
             _clients.Add(new Client(fullNameTextBox1.Text, new DateTime(), int.Parse(weigthTextBox3.Text), int.Parse(heigthTextBox4.Text)));
             ShowClientsContains();
+        }
+
+        private void setUpInfoPanel(Client client)
+        {
+            clientNameLabel1.Text = client.full_name;
+            birthDateLabel2.Text = client.date_of_birth.ToString();
+            weightLabel3.Text = client.weight_kg.ToString();
+            heightLabel4.Text = client.height_cm.ToString();
+            classesRestLabel5.Text = client.remaining_visits.ToString();
         }
     }
 }
