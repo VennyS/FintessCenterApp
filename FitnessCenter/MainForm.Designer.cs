@@ -243,6 +243,7 @@ namespace FitnessCenter
             this.searchClientsTextBox.Name = "searchClientsTextBox";
             this.searchClientsTextBox.Size = new System.Drawing.Size(330, 22);
             this.searchClientsTextBox.TabIndex = 0;
+            this.searchClientsTextBox.TextChanged += new System.EventHandler(this.searchClientsTextBox_TextChanged);
             // 
             // titleClientsLabel1
             // 
