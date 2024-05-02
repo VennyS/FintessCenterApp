@@ -219,9 +219,11 @@ namespace FitnessCenter
             this.createClientsButton.TabIndex = 2;
             this.createClientsButton.Text = "Добавить";
             this.createClientsButton.UseVisualStyleBackColor = true;
+            this.createClientsButton.Click += new System.EventHandler(this.createClientsButton_Click);
             // 
             // searchResultsClientsPanel1
             // 
+            this.searchResultsClientsPanel1.AutoScroll = true;
             this.searchResultsClientsPanel1.Controls.Add(this.notFoundClientsLabel1);
             this.searchResultsClientsPanel1.Location = new System.Drawing.Point(2, 38);
             this.searchResultsClientsPanel1.Name = "searchResultsClientsPanel1";
@@ -278,6 +280,7 @@ namespace FitnessCenter
             this.backCreatingClientButton2.TabIndex = 6;
             this.backCreatingClientButton2.Text = "Назад";
             this.backCreatingClientButton2.UseVisualStyleBackColor = true;
+            this.backCreatingClientButton2.Click += new System.EventHandler(this.backCreatingClientButton2_Click);
             // 
             // newClientButton1
             // 
@@ -287,6 +290,7 @@ namespace FitnessCenter
             this.newClientButton1.TabIndex = 5;
             this.newClientButton1.Text = "Добавить";
             this.newClientButton1.UseVisualStyleBackColor = true;
+            this.newClientButton1.Click += new System.EventHandler(this.newClientButton1_Click);
             // 
             // heigthTextBox4
             // 
@@ -458,7 +462,6 @@ namespace FitnessCenter
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1736, 720);
             this.Controls.Add(this.staffPanel3);
-            this.Controls.Add(this.clientsPanel2);
             this.Controls.Add(this.clientsButton2);
             this.Controls.Add(this.staffButton3);
             this.Controls.Add(this.analysButton4);
@@ -467,6 +470,7 @@ namespace FitnessCenter
             this.Controls.Add(this.titleLabel1);
             this.Controls.Add(this.schedulePanel1);
             this.Controls.Add(this.clientInfoPanel3);
+            this.Controls.Add(this.clientsPanel2);
             this.Name = "MainForm";
             this.Text = " XFIT";
             this.schedulePanel1.ResumeLayout(false);

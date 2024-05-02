@@ -92,5 +92,28 @@ namespace FitnessCenter
         {
             ShowClientsContains(searchClientsTextBox.Text);
         }
+
+        private void createClientsButton_Click(object sender, EventArgs e)
+        {
+            showClientsPanel1.Visible = false;
+            newClientPanel2.Visible = true;
+            searchClientsTextBox.Text = "";
+        }
+
+        private void backCreatingClientButton2_Click(object sender, EventArgs e)
+        {
+            showClientsPanel1.Visible = true;
+            newClientPanel2.Visible = false;
+        }
+
+        // TODO: реализовать добавление дня рождения через календарь
+        private void newClientButton1_Click(object sender, EventArgs e)
+        {
+            showClientsPanel1.Visible = true;
+            newClientPanel2.Visible = false;
+
+            _clients.Add(new Client(fullNameTextBox1.Text, new DateTime(), int.Parse(weigthTextBox3.Text), int.Parse(heigthTextBox4.Text)));
+            ShowClientsContains();
+        }
     }
 }
