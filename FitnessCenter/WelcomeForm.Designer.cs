@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace FitnesCenter
+namespace FitnessCenter
 {
     partial class WelcomeForm
     {
@@ -74,6 +74,9 @@ namespace FitnesCenter
             this.loginTextBox1.TabIndex = 4;
             this.loginTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.loginTextBox1.UseSystemPasswordChar = true;
+            this.loginTextBox1.Enter += new System.EventHandler(this.loginTextBox1_Enter);
+            this.loginTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.loginTextBox1_KeyDown);
+            this.loginTextBox1.Leave += new System.EventHandler(this.loginTextBox1_Leave);
             // 
             // passwordTextBox2
             // 
@@ -86,6 +89,9 @@ namespace FitnesCenter
             this.passwordTextBox2.Size = new System.Drawing.Size(208, 25);
             this.passwordTextBox2.TabIndex = 5;
             this.passwordTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.passwordTextBox2.Enter += new System.EventHandler(this.passwordTextBox2_Enter);
+            this.passwordTextBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passwordTextBox2_KeyDown);
+            this.passwordTextBox2.Leave += new System.EventHandler(this.passwordTextBox2_Leave);
             // 
             // autorizeButton1
             // 
@@ -100,6 +106,7 @@ namespace FitnesCenter
             this.autorizeButton1.TabIndex = 6;
             this.autorizeButton1.Text = "ВОЙТИ";
             this.autorizeButton1.UseVisualStyleBackColor = false;
+            this.autorizeButton1.Click += new System.EventHandler(this.autorizeButton1_Click);
             // 
             // titleLabel1
             // 

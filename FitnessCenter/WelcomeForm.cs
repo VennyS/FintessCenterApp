@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using System;
 
-namespace FitnesCenter
+namespace FitnessCenter
 {
     public partial class WelcomeForm : Form
     {
