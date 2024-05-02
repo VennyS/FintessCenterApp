@@ -68,10 +68,10 @@ namespace FitnessCenter
             this.birthDateLabel2 = new System.Windows.Forms.Label();
             this.clientNameLabel1 = new System.Windows.Forms.Label();
             this.staffPanel3 = new System.Windows.Forms.Panel();
+            this.staffLabel1 = new System.Windows.Forms.Label();
             this.searchResultsStaffPanel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.searchStaffTextBox1 = new System.Windows.Forms.TextBox();
-            this.staffLabel1 = new System.Windows.Forms.Label();
             this.schedulePanel1.SuspendLayout();
             this.clientsPanel2.SuspendLayout();
             this.showClientsPanel1.SuspendLayout();
@@ -128,6 +128,7 @@ namespace FitnessCenter
             this.scheduleButton1.TabIndex = 8;
             this.scheduleButton1.Text = "Расписание";
             this.scheduleButton1.UseVisualStyleBackColor = true;
+            this.scheduleButton1.Click += new System.EventHandler(this.scheduleButton1_Click);
             // 
             // analysButton4
             // 
@@ -137,6 +138,7 @@ namespace FitnessCenter
             this.analysButton4.TabIndex = 9;
             this.analysButton4.Text = "Анализ";
             this.analysButton4.UseVisualStyleBackColor = true;
+            this.analysButton4.Click += new System.EventHandler(this.analysButton4_Click);
             // 
             // staffButton3
             // 
@@ -146,6 +148,7 @@ namespace FitnessCenter
             this.staffButton3.TabIndex = 10;
             this.staffButton3.Text = "Сотрудники";
             this.staffButton3.UseVisualStyleBackColor = true;
+            this.staffButton3.Click += new System.EventHandler(this.staffButton3_Click);
             // 
             // clientsButton2
             // 
@@ -155,6 +158,7 @@ namespace FitnessCenter
             this.clientsButton2.TabIndex = 11;
             this.clientsButton2.Text = "Клиенты";
             this.clientsButton2.UseVisualStyleBackColor = true;
+            this.clientsButton2.Click += new System.EventHandler(this.clientsButton2_Click);
             // 
             // availableSchedulePanel1
             // 
@@ -415,6 +419,15 @@ namespace FitnessCenter
             this.staffPanel3.TabIndex = 5;
             this.staffPanel3.Visible = false;
             // 
+            // staffLabel1
+            // 
+            this.staffLabel1.AutoSize = true;
+            this.staffLabel1.Location = new System.Drawing.Point(3, 13);
+            this.staffLabel1.Name = "staffLabel1";
+            this.staffLabel1.Size = new System.Drawing.Size(86, 16);
+            this.staffLabel1.TabIndex = 5;
+            this.staffLabel1.Text = "Сотрудники";
+            // 
             // searchResultsStaffPanel1
             // 
             this.searchResultsStaffPanel1.Controls.Add(this.label1);
@@ -438,15 +451,6 @@ namespace FitnessCenter
             this.searchStaffTextBox1.Name = "searchStaffTextBox1";
             this.searchStaffTextBox1.Size = new System.Drawing.Size(440, 22);
             this.searchStaffTextBox1.TabIndex = 0;
-            // 
-            // staffLabel1
-            // 
-            this.staffLabel1.AutoSize = true;
-            this.staffLabel1.Location = new System.Drawing.Point(3, 13);
-            this.staffLabel1.Name = "staffLabel1";
-            this.staffLabel1.Size = new System.Drawing.Size(86, 16);
-            this.staffLabel1.TabIndex = 5;
-            this.staffLabel1.Text = "Сотрудники";
             // 
             // MainForm
             // 
