@@ -32,6 +32,9 @@ namespace FitnessCenter
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.titleLabel1 = new System.Windows.Forms.Label();
             this.titleScheduleLabel1 = new System.Windows.Forms.Label();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
@@ -44,21 +47,10 @@ namespace FitnessCenter
             this.dateScheduleLabel2 = new System.Windows.Forms.Label();
             this.schedulePanel1 = new System.Windows.Forms.Panel();
             this.clientsPanel2 = new System.Windows.Forms.Panel();
-            this.showClientsPanel1 = new System.Windows.Forms.Panel();
-            this.createClientsButton = new System.Windows.Forms.Button();
-            this.searchResultsClientsPanel1 = new System.Windows.Forms.Panel();
-            this.notFoundClientsLabel1 = new System.Windows.Forms.Label();
-            this.searchClientsTextBox = new System.Windows.Forms.TextBox();
             this.titleClientsLabel1 = new System.Windows.Forms.Label();
-            this.newClientPanel2 = new System.Windows.Forms.Panel();
-            this.backCreatingClientButton2 = new System.Windows.Forms.Button();
-            this.newClientButton1 = new System.Windows.Forms.Button();
-            this.heigthTextBox4 = new System.Windows.Forms.TextBox();
-            this.weigthTextBox3 = new System.Windows.Forms.TextBox();
-            this.birthDateTextBox2 = new System.Windows.Forms.TextBox();
-            this.fullNameTextBox1 = new System.Windows.Forms.TextBox();
-            this.newClientLabel2 = new System.Windows.Forms.Label();
             this.clientInfoPanel3 = new System.Windows.Forms.Panel();
+            this.backFromClientInfoButton4 = new System.Windows.Forms.Button();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.addClasseButton3 = new System.Windows.Forms.Button();
             this.signUpButton2 = new System.Windows.Forms.Button();
             this.classesRestLabel5 = new System.Windows.Forms.Label();
@@ -67,19 +59,46 @@ namespace FitnessCenter
             this.weightLabel3 = new System.Windows.Forms.Label();
             this.birthDateLabel2 = new System.Windows.Forms.Label();
             this.clientNameLabel1 = new System.Windows.Forms.Label();
+            this.showClientsPanel1 = new System.Windows.Forms.Panel();
+            this.createClientsButton = new System.Windows.Forms.Button();
+            this.searchResultsClientsPanel1 = new System.Windows.Forms.Panel();
+            this.notFoundClientsLabel1 = new System.Windows.Forms.Label();
+            this.searchClientsTextBox = new System.Windows.Forms.TextBox();
+            this.newClientPanel2 = new System.Windows.Forms.Panel();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.backCreatingClientButton2 = new System.Windows.Forms.Button();
+            this.newClientButton1 = new System.Windows.Forms.Button();
+            this.heigthTextBox4 = new System.Windows.Forms.TextBox();
+            this.weigthTextBox3 = new System.Windows.Forms.TextBox();
+            this.fullNameTextBox1 = new System.Windows.Forms.TextBox();
+            this.newClientLabel2 = new System.Windows.Forms.Label();
             this.staffPanel3 = new System.Windows.Forms.Panel();
             this.staffLabel1 = new System.Windows.Forms.Label();
             this.searchResultsStaffPanel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.searchStaffTextBox1 = new System.Windows.Forms.TextBox();
+            this.abonementsPanel4 = new System.Windows.Forms.Panel();
+            this.backFromAbonementsButton4 = new System.Windows.Forms.Button();
+            this.Variant3AbonementButton3 = new System.Windows.Forms.Button();
+            this.Variant2AbonementButton2 = new System.Windows.Forms.Button();
+            this.Variant1AbonementButton1 = new System.Windows.Forms.Button();
+            this.abonementsLabel1 = new System.Windows.Forms.Label();
+            this.choosedPlanPanel5 = new System.Windows.Forms.Panel();
+            this.acceptPlanButton3 = new System.Windows.Forms.Button();
+            this.backFromChosedPlanButton3 = new System.Windows.Forms.Button();
+            this.choosedPlanButton1 = new System.Windows.Forms.Button();
+            this.choosedPlanLabel1 = new System.Windows.Forms.Label();
             this.schedulePanel1.SuspendLayout();
             this.clientsPanel2.SuspendLayout();
+            this.clientInfoPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.showClientsPanel1.SuspendLayout();
             this.searchResultsClientsPanel1.SuspendLayout();
             this.newClientPanel2.SuspendLayout();
-            this.clientInfoPanel3.SuspendLayout();
             this.staffPanel3.SuspendLayout();
             this.searchResultsStaffPanel1.SuspendLayout();
+            this.abonementsPanel4.SuspendLayout();
+            this.choosedPlanPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // titleLabel1
@@ -185,22 +204,147 @@ namespace FitnessCenter
             this.schedulePanel1.Controls.Add(this.availableSchedulePanel1);
             this.schedulePanel1.Controls.Add(this.titleScheduleLabel1);
             this.schedulePanel1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.schedulePanel1.Location = new System.Drawing.Point(752, 21);
+            this.schedulePanel1.Location = new System.Drawing.Point(710, 21);
             this.schedulePanel1.Name = "schedulePanel1";
             this.schedulePanel1.Size = new System.Drawing.Size(474, 320);
             this.schedulePanel1.TabIndex = 13;
             // 
             // clientsPanel2
             // 
+            this.clientsPanel2.Controls.Add(this.titleClientsLabel1);
             this.clientsPanel2.Controls.Add(this.clientInfoPanel3);
             this.clientsPanel2.Controls.Add(this.showClientsPanel1);
-            this.clientsPanel2.Controls.Add(this.titleClientsLabel1);
             this.clientsPanel2.Controls.Add(this.newClientPanel2);
             this.clientsPanel2.Location = new System.Drawing.Point(710, 370);
             this.clientsPanel2.Name = "clientsPanel2";
             this.clientsPanel2.Size = new System.Drawing.Size(485, 332);
             this.clientsPanel2.TabIndex = 16;
             this.clientsPanel2.Visible = false;
+            // 
+            // titleClientsLabel1
+            // 
+            this.titleClientsLabel1.AutoSize = true;
+            this.titleClientsLabel1.Location = new System.Drawing.Point(22, 16);
+            this.titleClientsLabel1.Name = "titleClientsLabel1";
+            this.titleClientsLabel1.Size = new System.Drawing.Size(63, 16);
+            this.titleClientsLabel1.TabIndex = 3;
+            this.titleClientsLabel1.Text = "Клиенты";
+            // 
+            // clientInfoPanel3
+            // 
+            this.clientInfoPanel3.BackColor = System.Drawing.Color.White;
+            this.clientInfoPanel3.Controls.Add(this.backFromClientInfoButton4);
+            this.clientInfoPanel3.Controls.Add(this.chart1);
+            this.clientInfoPanel3.Controls.Add(this.addClasseButton3);
+            this.clientInfoPanel3.Controls.Add(this.signUpButton2);
+            this.clientInfoPanel3.Controls.Add(this.classesRestLabel5);
+            this.clientInfoPanel3.Controls.Add(this.visitHistoryButton1);
+            this.clientInfoPanel3.Controls.Add(this.heightLabel4);
+            this.clientInfoPanel3.Controls.Add(this.weightLabel3);
+            this.clientInfoPanel3.Controls.Add(this.birthDateLabel2);
+            this.clientInfoPanel3.Controls.Add(this.clientNameLabel1);
+            this.clientInfoPanel3.Location = new System.Drawing.Point(23, 39);
+            this.clientInfoPanel3.Name = "clientInfoPanel3";
+            this.clientInfoPanel3.Size = new System.Drawing.Size(456, 281);
+            this.clientInfoPanel3.TabIndex = 5;
+            this.clientInfoPanel3.Visible = false;
+            // 
+            // backFromClientInfoButton4
+            // 
+            this.backFromClientInfoButton4.BackColor = System.Drawing.Color.White;
+            this.backFromClientInfoButton4.BackgroundImage = global::FitnessCenter.Properties.Resources.back_icon;
+            this.backFromClientInfoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.backFromClientInfoButton4.Location = new System.Drawing.Point(400, 4);
+            this.backFromClientInfoButton4.Name = "backFromClientInfoButton4";
+            this.backFromClientInfoButton4.Size = new System.Drawing.Size(50, 33);
+            this.backFromClientInfoButton4.TabIndex = 9;
+            this.backFromClientInfoButton4.UseVisualStyleBackColor = false;
+            this.backFromClientInfoButton4.Click += new System.EventHandler(this.backFromClientInfoButton4_Click);
+            // 
+            // chart1
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
+            this.chart1.Location = new System.Drawing.Point(4, 69);
+            this.chart1.Name = "chart1";
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
+            this.chart1.Size = new System.Drawing.Size(269, 209);
+            this.chart1.TabIndex = 8;
+            this.chart1.Text = "chart1";
+            // 
+            // addClasseButton3
+            // 
+            this.addClasseButton3.Location = new System.Drawing.Point(278, 181);
+            this.addClasseButton3.Name = "addClasseButton3";
+            this.addClasseButton3.Size = new System.Drawing.Size(167, 29);
+            this.addClasseButton3.TabIndex = 7;
+            this.addClasseButton3.Text = "добавить занятие";
+            this.addClasseButton3.UseVisualStyleBackColor = true;
+            this.addClasseButton3.Click += new System.EventHandler(this.addClasseButton3_Click);
+            // 
+            // signUpButton2
+            // 
+            this.signUpButton2.Location = new System.Drawing.Point(278, 140);
+            this.signUpButton2.Name = "signUpButton2";
+            this.signUpButton2.Size = new System.Drawing.Size(167, 29);
+            this.signUpButton2.TabIndex = 6;
+            this.signUpButton2.Text = "записать на занятие";
+            this.signUpButton2.UseVisualStyleBackColor = true;
+            // 
+            // classesRestLabel5
+            // 
+            this.classesRestLabel5.Location = new System.Drawing.Point(283, 117);
+            this.classesRestLabel5.Name = "classesRestLabel5";
+            this.classesRestLabel5.Size = new System.Drawing.Size(162, 20);
+            this.classesRestLabel5.TabIndex = 5;
+            this.classesRestLabel5.Text = "Количество оставшихся занятий";
+            // 
+            // visitHistoryButton1
+            // 
+            this.visitHistoryButton1.Location = new System.Drawing.Point(278, 75);
+            this.visitHistoryButton1.Name = "visitHistoryButton1";
+            this.visitHistoryButton1.Size = new System.Drawing.Size(171, 29);
+            this.visitHistoryButton1.TabIndex = 4;
+            this.visitHistoryButton1.Text = "история посещений";
+            this.visitHistoryButton1.UseVisualStyleBackColor = true;
+            // 
+            // heightLabel4
+            // 
+            this.heightLabel4.Location = new System.Drawing.Point(362, 50);
+            this.heightLabel4.Name = "heightLabel4";
+            this.heightLabel4.Size = new System.Drawing.Size(83, 20);
+            this.heightLabel4.TabIndex = 3;
+            this.heightLabel4.Text = "Рост";
+            // 
+            // weightLabel3
+            // 
+            this.weightLabel3.Location = new System.Drawing.Point(287, 49);
+            this.weightLabel3.Name = "weightLabel3";
+            this.weightLabel3.Size = new System.Drawing.Size(69, 20);
+            this.weightLabel3.TabIndex = 2;
+            this.weightLabel3.Text = "Вес";
+            // 
+            // birthDateLabel2
+            // 
+            this.birthDateLabel2.Location = new System.Drawing.Point(283, 12);
+            this.birthDateLabel2.Name = "birthDateLabel2";
+            this.birthDateLabel2.Size = new System.Drawing.Size(153, 20);
+            this.birthDateLabel2.TabIndex = 1;
+            this.birthDateLabel2.Text = "День рождения";
+            // 
+            // clientNameLabel1
+            // 
+            this.clientNameLabel1.Location = new System.Drawing.Point(12, 12);
+            this.clientNameLabel1.Name = "clientNameLabel1";
+            this.clientNameLabel1.Size = new System.Drawing.Size(147, 20);
+            this.clientNameLabel1.TabIndex = 0;
+            this.clientNameLabel1.Text = "Имя клиента";
             // 
             // showClientsPanel1
             // 
@@ -248,23 +392,14 @@ namespace FitnessCenter
             this.searchClientsTextBox.TabIndex = 0;
             this.searchClientsTextBox.TextChanged += new System.EventHandler(this.searchClientsTextBox_TextChanged);
             // 
-            // titleClientsLabel1
-            // 
-            this.titleClientsLabel1.AutoSize = true;
-            this.titleClientsLabel1.Location = new System.Drawing.Point(22, 16);
-            this.titleClientsLabel1.Name = "titleClientsLabel1";
-            this.titleClientsLabel1.Size = new System.Drawing.Size(63, 16);
-            this.titleClientsLabel1.TabIndex = 3;
-            this.titleClientsLabel1.Text = "Клиенты";
-            // 
             // newClientPanel2
             // 
             this.newClientPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.newClientPanel2.Controls.Add(this.dateTimePicker1);
             this.newClientPanel2.Controls.Add(this.backCreatingClientButton2);
             this.newClientPanel2.Controls.Add(this.newClientButton1);
             this.newClientPanel2.Controls.Add(this.heigthTextBox4);
             this.newClientPanel2.Controls.Add(this.weigthTextBox3);
-            this.newClientPanel2.Controls.Add(this.birthDateTextBox2);
             this.newClientPanel2.Controls.Add(this.fullNameTextBox1);
             this.newClientPanel2.Controls.Add(this.newClientLabel2);
             this.newClientPanel2.Location = new System.Drawing.Point(23, 39);
@@ -272,6 +407,13 @@ namespace FitnessCenter
             this.newClientPanel2.Size = new System.Drawing.Size(452, 268);
             this.newClientPanel2.TabIndex = 4;
             this.newClientPanel2.Visible = false;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(42, 93);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(371, 22);
+            this.dateTimePicker1.TabIndex = 7;
             // 
             // backCreatingClientButton2
             // 
@@ -307,13 +449,6 @@ namespace FitnessCenter
             this.weigthTextBox3.Size = new System.Drawing.Size(125, 22);
             this.weigthTextBox3.TabIndex = 3;
             // 
-            // birthDateTextBox2
-            // 
-            this.birthDateTextBox2.Location = new System.Drawing.Point(38, 92);
-            this.birthDateTextBox2.Name = "birthDateTextBox2";
-            this.birthDateTextBox2.Size = new System.Drawing.Size(373, 22);
-            this.birthDateTextBox2.TabIndex = 2;
-            // 
             // fullNameTextBox1
             // 
             this.fullNameTextBox1.Location = new System.Drawing.Point(38, 47);
@@ -329,90 +464,6 @@ namespace FitnessCenter
             this.newClientLabel2.Size = new System.Drawing.Size(99, 16);
             this.newClientLabel2.TabIndex = 0;
             this.newClientLabel2.Text = "Новый клиент";
-            // 
-            // clientInfoPanel3
-            // 
-            this.clientInfoPanel3.BackColor = System.Drawing.Color.White;
-            this.clientInfoPanel3.Controls.Add(this.addClasseButton3);
-            this.clientInfoPanel3.Controls.Add(this.signUpButton2);
-            this.clientInfoPanel3.Controls.Add(this.classesRestLabel5);
-            this.clientInfoPanel3.Controls.Add(this.visitHistoryButton1);
-            this.clientInfoPanel3.Controls.Add(this.heightLabel4);
-            this.clientInfoPanel3.Controls.Add(this.weightLabel3);
-            this.clientInfoPanel3.Controls.Add(this.birthDateLabel2);
-            this.clientInfoPanel3.Controls.Add(this.clientNameLabel1);
-            this.clientInfoPanel3.Location = new System.Drawing.Point(23, 39);
-            this.clientInfoPanel3.Name = "clientInfoPanel3";
-            this.clientInfoPanel3.Size = new System.Drawing.Size(456, 268);
-            this.clientInfoPanel3.TabIndex = 5;
-            this.clientInfoPanel3.Visible = false;
-            // 
-            // addClasseButton3
-            // 
-            this.addClasseButton3.Location = new System.Drawing.Point(173, 204);
-            this.addClasseButton3.Name = "addClasseButton3";
-            this.addClasseButton3.Size = new System.Drawing.Size(167, 29);
-            this.addClasseButton3.TabIndex = 7;
-            this.addClasseButton3.Text = "добавить занятие";
-            this.addClasseButton3.UseVisualStyleBackColor = true;
-            // 
-            // signUpButton2
-            // 
-            this.signUpButton2.Location = new System.Drawing.Point(173, 169);
-            this.signUpButton2.Name = "signUpButton2";
-            this.signUpButton2.Size = new System.Drawing.Size(167, 29);
-            this.signUpButton2.TabIndex = 6;
-            this.signUpButton2.Text = "записать на занятие";
-            this.signUpButton2.UseVisualStyleBackColor = true;
-            // 
-            // classesRestLabel5
-            // 
-            this.classesRestLabel5.Location = new System.Drawing.Point(182, 140);
-            this.classesRestLabel5.Name = "classesRestLabel5";
-            this.classesRestLabel5.Size = new System.Drawing.Size(162, 20);
-            this.classesRestLabel5.TabIndex = 5;
-            this.classesRestLabel5.Text = "Количество оставшихся занятий";
-            // 
-            // visitHistoryButton1
-            // 
-            this.visitHistoryButton1.Location = new System.Drawing.Point(173, 98);
-            this.visitHistoryButton1.Name = "visitHistoryButton1";
-            this.visitHistoryButton1.Size = new System.Drawing.Size(171, 29);
-            this.visitHistoryButton1.TabIndex = 4;
-            this.visitHistoryButton1.Text = "история посещений";
-            this.visitHistoryButton1.UseVisualStyleBackColor = true;
-            // 
-            // heightLabel4
-            // 
-            this.heightLabel4.Location = new System.Drawing.Point(184, 73);
-            this.heightLabel4.Name = "heightLabel4";
-            this.heightLabel4.Size = new System.Drawing.Size(157, 20);
-            this.heightLabel4.TabIndex = 3;
-            this.heightLabel4.Text = "Рост";
-            // 
-            // weightLabel3
-            // 
-            this.weightLabel3.Location = new System.Drawing.Point(182, 42);
-            this.weightLabel3.Name = "weightLabel3";
-            this.weightLabel3.Size = new System.Drawing.Size(157, 20);
-            this.weightLabel3.TabIndex = 2;
-            this.weightLabel3.Text = "Вес";
-            // 
-            // birthDateLabel2
-            // 
-            this.birthDateLabel2.Location = new System.Drawing.Point(11, 41);
-            this.birthDateLabel2.Name = "birthDateLabel2";
-            this.birthDateLabel2.Size = new System.Drawing.Size(148, 20);
-            this.birthDateLabel2.TabIndex = 1;
-            this.birthDateLabel2.Text = "День рождения";
-            // 
-            // clientNameLabel1
-            // 
-            this.clientNameLabel1.Location = new System.Drawing.Point(12, 12);
-            this.clientNameLabel1.Name = "clientNameLabel1";
-            this.clientNameLabel1.Size = new System.Drawing.Size(327, 20);
-            this.clientNameLabel1.TabIndex = 0;
-            this.clientNameLabel1.Text = "Имя клиента";
             // 
             // staffPanel3
             // 
@@ -458,10 +509,132 @@ namespace FitnessCenter
             this.searchStaffTextBox1.Size = new System.Drawing.Size(440, 22);
             this.searchStaffTextBox1.TabIndex = 0;
             // 
+            // abonementsPanel4
+            // 
+            this.abonementsPanel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(93)))), ((int)(((byte)(88)))));
+            this.abonementsPanel4.Controls.Add(this.backFromAbonementsButton4);
+            this.abonementsPanel4.Controls.Add(this.Variant3AbonementButton3);
+            this.abonementsPanel4.Controls.Add(this.Variant2AbonementButton2);
+            this.abonementsPanel4.Controls.Add(this.Variant1AbonementButton1);
+            this.abonementsPanel4.Controls.Add(this.abonementsLabel1);
+            this.abonementsPanel4.Location = new System.Drawing.Point(1244, 302);
+            this.abonementsPanel4.Name = "abonementsPanel4";
+            this.abonementsPanel4.Size = new System.Drawing.Size(437, 136);
+            this.abonementsPanel4.TabIndex = 17;
+            this.abonementsPanel4.Visible = false;
+            // 
+            // backFromAbonementsButton4
+            // 
+            this.backFromAbonementsButton4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(93)))), ((int)(((byte)(88)))));
+            this.backFromAbonementsButton4.BackgroundImage = global::FitnessCenter.Properties.Resources.back_icon;
+            this.backFromAbonementsButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.backFromAbonementsButton4.Location = new System.Drawing.Point(3, 3);
+            this.backFromAbonementsButton4.Name = "backFromAbonementsButton4";
+            this.backFromAbonementsButton4.Size = new System.Drawing.Size(50, 33);
+            this.backFromAbonementsButton4.TabIndex = 10;
+            this.backFromAbonementsButton4.UseVisualStyleBackColor = false;
+            this.backFromAbonementsButton4.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // Variant3AbonementButton3
+            // 
+            this.Variant3AbonementButton3.Location = new System.Drawing.Point(107, 100);
+            this.Variant3AbonementButton3.Name = "Variant3AbonementButton3";
+            this.Variant3AbonementButton3.Size = new System.Drawing.Size(222, 23);
+            this.Variant3AbonementButton3.TabIndex = 3;
+            this.Variant3AbonementButton3.Text = "16 занятий: 2800₽";
+            this.Variant3AbonementButton3.UseVisualStyleBackColor = true;
+            this.Variant3AbonementButton3.Click += new System.EventHandler(this.Variant3AbonementButton3_Click);
+            // 
+            // Variant2AbonementButton2
+            // 
+            this.Variant2AbonementButton2.Location = new System.Drawing.Point(107, 68);
+            this.Variant2AbonementButton2.Name = "Variant2AbonementButton2";
+            this.Variant2AbonementButton2.Size = new System.Drawing.Size(222, 23);
+            this.Variant2AbonementButton2.TabIndex = 2;
+            this.Variant2AbonementButton2.Text = "12 занятий: 2200₽";
+            this.Variant2AbonementButton2.UseVisualStyleBackColor = true;
+            this.Variant2AbonementButton2.Click += new System.EventHandler(this.Variant2AbonementButton2_Click);
+            // 
+            // Variant1AbonementButton1
+            // 
+            this.Variant1AbonementButton1.Location = new System.Drawing.Point(107, 37);
+            this.Variant1AbonementButton1.Name = "Variant1AbonementButton1";
+            this.Variant1AbonementButton1.Size = new System.Drawing.Size(222, 23);
+            this.Variant1AbonementButton1.TabIndex = 1;
+            this.Variant1AbonementButton1.Text = "8 занятий: 1600₽";
+            this.Variant1AbonementButton1.UseVisualStyleBackColor = true;
+            this.Variant1AbonementButton1.Click += new System.EventHandler(this.Variant1AbonementButton1_Click);
+            // 
+            // abonementsLabel1
+            // 
+            this.abonementsLabel1.AutoSize = true;
+            this.abonementsLabel1.ForeColor = System.Drawing.SystemColors.Control;
+            this.abonementsLabel1.Location = new System.Drawing.Point(174, 6);
+            this.abonementsLabel1.Name = "abonementsLabel1";
+            this.abonementsLabel1.Size = new System.Drawing.Size(89, 16);
+            this.abonementsLabel1.TabIndex = 0;
+            this.abonementsLabel1.Text = "Абонементы";
+            // 
+            // choosedPlanPanel5
+            // 
+            this.choosedPlanPanel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(93)))), ((int)(((byte)(88)))));
+            this.choosedPlanPanel5.Controls.Add(this.acceptPlanButton3);
+            this.choosedPlanPanel5.Controls.Add(this.backFromChosedPlanButton3);
+            this.choosedPlanPanel5.Controls.Add(this.choosedPlanButton1);
+            this.choosedPlanPanel5.Controls.Add(this.choosedPlanLabel1);
+            this.choosedPlanPanel5.Location = new System.Drawing.Point(1244, 452);
+            this.choosedPlanPanel5.Name = "choosedPlanPanel5";
+            this.choosedPlanPanel5.Size = new System.Drawing.Size(437, 136);
+            this.choosedPlanPanel5.TabIndex = 18;
+            this.choosedPlanPanel5.Visible = false;
+            // 
+            // acceptPlanButton3
+            // 
+            this.acceptPlanButton3.Location = new System.Drawing.Point(157, 87);
+            this.acceptPlanButton3.Name = "acceptPlanButton3";
+            this.acceptPlanButton3.Size = new System.Drawing.Size(119, 32);
+            this.acceptPlanButton3.TabIndex = 11;
+            this.acceptPlanButton3.Text = "подтвердить";
+            this.acceptPlanButton3.UseVisualStyleBackColor = true;
+            this.acceptPlanButton3.Click += new System.EventHandler(this.acceptPlanButton3_Click);
+            // 
+            // backFromChosedPlanButton3
+            // 
+            this.backFromChosedPlanButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(93)))), ((int)(((byte)(88)))));
+            this.backFromChosedPlanButton3.BackgroundImage = global::FitnessCenter.Properties.Resources.back_icon;
+            this.backFromChosedPlanButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.backFromChosedPlanButton3.Location = new System.Drawing.Point(3, 3);
+            this.backFromChosedPlanButton3.Name = "backFromChosedPlanButton3";
+            this.backFromChosedPlanButton3.Size = new System.Drawing.Size(50, 33);
+            this.backFromChosedPlanButton3.TabIndex = 10;
+            this.backFromChosedPlanButton3.UseVisualStyleBackColor = false;
+            this.backFromChosedPlanButton3.Click += new System.EventHandler(this.backFromChosedPlanButton3_Click);
+            // 
+            // choosedPlanButton1
+            // 
+            this.choosedPlanButton1.Location = new System.Drawing.Point(107, 37);
+            this.choosedPlanButton1.Name = "choosedPlanButton1";
+            this.choosedPlanButton1.Size = new System.Drawing.Size(222, 35);
+            this.choosedPlanButton1.TabIndex = 1;
+            this.choosedPlanButton1.Text = "8 занятий: 1600₽";
+            this.choosedPlanButton1.UseVisualStyleBackColor = true;
+            // 
+            // choosedPlanLabel1
+            // 
+            this.choosedPlanLabel1.AutoSize = true;
+            this.choosedPlanLabel1.ForeColor = System.Drawing.SystemColors.Control;
+            this.choosedPlanLabel1.Location = new System.Drawing.Point(174, 6);
+            this.choosedPlanLabel1.Name = "choosedPlanLabel1";
+            this.choosedPlanLabel1.Size = new System.Drawing.Size(89, 16);
+            this.choosedPlanLabel1.TabIndex = 0;
+            this.choosedPlanLabel1.Text = "Абонементы";
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1736, 720);
+            this.Controls.Add(this.choosedPlanPanel5);
+            this.Controls.Add(this.abonementsPanel4);
             this.Controls.Add(this.staffPanel3);
             this.Controls.Add(this.clientsButton2);
             this.Controls.Add(this.staffButton3);
@@ -477,17 +650,22 @@ namespace FitnessCenter
             this.schedulePanel1.PerformLayout();
             this.clientsPanel2.ResumeLayout(false);
             this.clientsPanel2.PerformLayout();
+            this.clientInfoPanel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.showClientsPanel1.ResumeLayout(false);
             this.showClientsPanel1.PerformLayout();
             this.searchResultsClientsPanel1.ResumeLayout(false);
             this.searchResultsClientsPanel1.PerformLayout();
             this.newClientPanel2.ResumeLayout(false);
             this.newClientPanel2.PerformLayout();
-            this.clientInfoPanel3.ResumeLayout(false);
             this.staffPanel3.ResumeLayout(false);
             this.staffPanel3.PerformLayout();
             this.searchResultsStaffPanel1.ResumeLayout(false);
             this.searchResultsStaffPanel1.PerformLayout();
+            this.abonementsPanel4.ResumeLayout(false);
+            this.abonementsPanel4.PerformLayout();
+            this.choosedPlanPanel5.ResumeLayout(false);
+            this.choosedPlanPanel5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -498,7 +676,6 @@ namespace FitnessCenter
         private Label titleLabel1;
         private Label titleScheduleLabel1;
         private MonthCalendar monthCalendar1;
-        private Panel splitter;
         private Button scheduleButton1;
         private Button analysButton4;
         private Button staffButton3;
@@ -511,7 +688,6 @@ namespace FitnessCenter
         private Button createClientsButton;
         private Label titleClientsLabel1;
         private Panel newClientPanel2;
-        private TextBox birthDateTextBox2;
         private TextBox fullNameTextBox1;
         private Label newClientLabel2;
         private Button newClientButton1;
@@ -535,5 +711,20 @@ namespace FitnessCenter
         private Label label1;
         private TextBox searchStaffTextBox1;
         private Label staffLabel1;
+        private DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private Panel splitter;
+        private Button backFromClientInfoButton4;
+        private Panel abonementsPanel4;
+        private Label abonementsLabel1;
+        private Button Variant3AbonementButton3;
+        private Button Variant2AbonementButton2;
+        private Button Variant1AbonementButton1;
+        private Button backFromAbonementsButton4;
+        private Panel choosedPlanPanel5;
+        private Button acceptPlanButton3;
+        private Button backFromChosedPlanButton3;
+        private Button choosedPlanButton1;
+        private Label choosedPlanLabel1;
     }
 }

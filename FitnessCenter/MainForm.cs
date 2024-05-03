@@ -13,6 +13,8 @@ namespace FitnessCenter
     public partial class MainForm : Form
     {
         private List<Client> _clients;
+        private Client _choosedClient;
+        private int _choosedPlan;
         public MainForm()
         {
             InitializeComponent();
@@ -22,13 +24,13 @@ namespace FitnessCenter
             ShowClientsContains();
         }
 
-        private int ShowClientsContains(string text = "")
+        private bool ShowClientsContains(string text = "")
         {
             // Очищаем все предыдущие кнопки
             var buttons = searchResultsClientsPanel1.Controls.OfType<Button>().ToArray();
             foreach (Button button in buttons) searchResultsClientsPanel1.Controls.Remove(button);
 
-            int count = 0;
+            bool anyItemContains = false; // 
             int topMargin = 0; // отступ сверху для первой кнопки
 
             foreach (Client client in _clients)
@@ -50,13 +52,13 @@ namespace FitnessCenter
 
                     // Увеличиваем отступ сверху для следующей кнопки
                     topMargin += btnClient.Height + 5; // добавляем высоту кнопки и небольшой отступ
-                    count++;
+                    anyItemContains = true;
                 }               
             }
 
-            if (count == 0) notFoundClientsLabel1.Visible = true;
+            if (!anyItemContains) notFoundClientsLabel1.Visible = true;
             else notFoundClientsLabel1.Visible = false;
-            return count;
+            return anyItemContains;
         }
 
         private void ClientButton_Click(Client client)
@@ -70,7 +72,7 @@ namespace FitnessCenter
         {
             foreach (Control control in this.Controls)
             {
-                if ((control is Panel) && (control.Name != target) && (control.Name != "splitter")) control.Visible = false;
+                if ((control is Panel) && (control.Name != target)) control.Visible = false;
                 else control.Visible = true;
             }
         }
@@ -116,24 +118,77 @@ namespace FitnessCenter
             newClientPanel2.Visible = false;
         }
 
-        // TODO: реализовать добавление дня рождения через календарь
         private void newClientButton1_Click(object sender, EventArgs e)
         {
             showClientsPanel1.Visible = true;
             clientInfoPanel3.Visible = false;
             newClientPanel2.Visible = false;
 
-            _clients.Add(new Client(fullNameTextBox1.Text, new DateTime(), int.Parse(weigthTextBox3.Text), int.Parse(heigthTextBox4.Text)));
+            _clients.Add(new Client(fullNameTextBox1.Text, dateTimePicker1.Value, int.Parse(weigthTextBox3.Text), int.Parse(heigthTextBox4.Text)));
             ShowClientsContains();
         }
 
         private void setUpInfoPanel(Client client)
         {
-            clientNameLabel1.Text = client.full_name;
-            birthDateLabel2.Text = client.date_of_birth.ToString();
-            weightLabel3.Text = client.weight_kg.ToString();
-            heightLabel4.Text = client.height_cm.ToString();
-            classesRestLabel5.Text = client.remaining_visits.ToString();
+            _choosedClient = client;
+            clientNameLabel1.Text = _choosedClient.full_name;
+            birthDateLabel2.Text = _choosedClient.date_of_birth.ToString();
+            weightLabel3.Text = _choosedClient.weight_kg.ToString();
+            heightLabel4.Text = _choosedClient.height_cm.ToString();
+            classesRestLabel5.Text = "осталось занятий: " + _choosedClient.remaining_visits.ToString();
+        }
+
+        private void backFromClientInfoButton4_Click(object sender, EventArgs e)
+        {
+            clientInfoPanel3.Visible = false;
+            showClientsPanel1.Visible = true;
+        }
+
+        private void addClasseButton3_Click(object sender, EventArgs e)
+        {
+            abonementsPanel4.Visible = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            abonementsPanel4.Visible = false;
+        }
+
+        private void Variant1AbonementButton1_Click(object sender, EventArgs e)
+        {
+            _choosedPlan = 8;
+            abonementsPanel4.Visible = false;
+            choosedPlanPanel5.Visible = true;
+            choosedPlanButton1.Text = Variant1AbonementButton1.Text;
+        }
+
+        private void Variant2AbonementButton2_Click(object sender, EventArgs e)
+        {
+            _choosedPlan = 12;
+            abonementsPanel4.Visible = false;
+            choosedPlanPanel5.Visible = true;
+            choosedPlanButton1.Text = Variant2AbonementButton2.Text;
+        }
+
+        private void Variant3AbonementButton3_Click(object sender, EventArgs e)
+        {
+            _choosedPlan = 16;
+            abonementsPanel4.Visible = false;
+            choosedPlanPanel5.Visible = true;
+            choosedPlanButton1.Text = Variant3AbonementButton3.Text;
+        }
+
+        private void acceptPlanButton3_Click(object sender, EventArgs e)
+        {
+            _choosedClient.addClasses(_choosedPlan);
+            choosedPlanPanel5.Visible = false;
+            setUpInfoPanel(_choosedClient);
+        }
+
+        private void backFromChosedPlanButton3_Click(object sender, EventArgs e)
+        {
+            choosedPlanPanel5.Visible = false;
+            abonementsPanel4.Visible = true;
         }
     }
 }
