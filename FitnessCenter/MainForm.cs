@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FitnessCenter.Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,7 @@ namespace FitnessCenter
     public partial class MainForm : Form
     {
         private List<Client> _clients;
+        private List<GroupClass> _groupClasses;
         private Client _choosedClient;
         private int _choosedPlan;
         public MainForm()
@@ -20,8 +22,43 @@ namespace FitnessCenter
             InitializeComponent();
 
             Manager manager = new Manager();
+
             _clients = manager.GetClients();
-            ShowClientsContains();
+            _groupClasses = manager.GetClasses();
+
+            ShowGroupClasses();
+        }
+
+        private void ShowGroupClasses()
+        {
+            availableSchedulePanel1.Controls.Clear();
+            int topMargin = 0;
+            foreach (GroupClass groupClass in _groupClasses)
+            {
+                // отступ сверху для первой кнопки
+                if (groupClass.date == monthCalendar1.SelectionStart)
+                {
+                    Button btnName = new Button();
+                    btnName.Text = groupClass.name;
+                    btnName.Size = new Size(100, 22);
+                    btnName.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
+                    availableSchedulePanel1.Controls.Add(btnName);
+
+
+                    int leftMargin = btnName.Width + 5;
+                    foreach (string time in groupClass.times)
+                    {
+                        Button btnTime = new Button();
+                        btnTime.Text = time;
+                        btnTime.Size = new Size(50, 22);
+                        btnTime.Location = new Point(leftMargin, topMargin);
+                        leftMargin += btnTime.Width + 5;
+                        availableSchedulePanel1.Controls.Add(btnTime);
+                    }
+
+                    topMargin += btnName.Height + 5;
+                }
+            }
         }
 
         private bool ShowClientsContains(string text = "")
@@ -84,6 +121,7 @@ namespace FitnessCenter
 
         private void clientsButton2_Click(object sender, EventArgs e)
         {
+            ShowClientsContains();
             showOnlyPanel("clientsPanel2");
         }
 
@@ -189,6 +227,11 @@ namespace FitnessCenter
         {
             choosedPlanPanel5.Visible = false;
             abonementsPanel4.Visible = true;
+        }
+
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            ShowGroupClasses();
         }
     }
 }

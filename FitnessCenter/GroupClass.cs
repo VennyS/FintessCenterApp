@@ -8,7 +8,8 @@ namespace FitnessCenter.Resources
 {
     internal class GroupClass
     {
-        public string Name { get; set; }
+        public string name { get; set; }
         public string[] times { get; set; }
+        public DateTime date { get; set; }
     }
 }
