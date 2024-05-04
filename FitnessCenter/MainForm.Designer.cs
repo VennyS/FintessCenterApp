@@ -317,6 +317,7 @@ namespace FitnessCenter
             this.visitHistoryButton1.TabIndex = 4;
             this.visitHistoryButton1.Text = "история посещений";
             this.visitHistoryButton1.UseVisualStyleBackColor = true;
+            this.visitHistoryButton1.Click += new System.EventHandler(this.visitHistoryButton1_Click);
             // 
             // heightLabel4
             // 

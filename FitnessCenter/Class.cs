@@ -24,6 +24,9 @@ namespace FitnessCenter.Resources
             this.isGroup = isGroup;
         }
 
-        
+        public void setClients(List<Client> clients)
+        {
+            this.clients = clients;
+        }
     }
 }

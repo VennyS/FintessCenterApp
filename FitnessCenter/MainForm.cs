@@ -290,5 +290,10 @@ namespace FitnessCenter
         {
             ShowGroupClasses();
         }
+
+        private void visitHistoryButton1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

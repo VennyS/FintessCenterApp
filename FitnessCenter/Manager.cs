@@ -32,6 +32,25 @@ namespace FitnessCenter
                 new Class("Функциональная тренировка", new DateTime(2024, 5, 4, 13, 0, 0)),
                 new Class("Функциональная тренировка", new DateTime(2024, 5, 4, 19, 0, 0))
             };
+
+            // Добавляем случайных клиентов к каждому занятию
+            _groupClasses[0].setClients(new List<Client> { _clients[0], _clients[1] });
+            _groupClasses[1].setClients(new List<Client> { _clients[2], _clients[3] });
+            _groupClasses[2].setClients(new List<Client> { _clients[4], _clients[5] });
+            _groupClasses[3].setClients(new List<Client> { _clients[6], _clients[0] });
+            _groupClasses[4].setClients(new List<Client> { _clients[1], _clients[2] });
+            _groupClasses[5].setClients(new List<Client> { _clients[3], _clients[4] });
+            _groupClasses[6].setClients(new List<Client> { _clients[5], _clients[6] });
+            _groupClasses[7].setClients(new List<Client> { _clients[0], _clients[2] });
+
+            // Добавляем занятия к каждому клиенту
+            _clients[0].setClasses(new List<Class> { _groupClasses[0], _groupClasses[3], _groupClasses[7] });
+            _clients[1].setClasses(new List<Class> { _groupClasses[0], _groupClasses[4] });
+            _clients[2].setClasses(new List<Class> { _groupClasses[1], _groupClasses[4], _groupClasses[7] });
+            _clients[3].setClasses(new List<Class> { _groupClasses[1], _groupClasses[5] });
+            _clients[4].setClasses(new List<Class> { _groupClasses[2], _groupClasses[5] });
+            _clients[5].setClasses(new List<Class> { _groupClasses[2], _groupClasses[6] });
+            _clients[6].setClasses(new List<Class> { _groupClasses[3], _groupClasses[6] });
         }
 
         public List<Client> GetClients() {  return _clients; }
