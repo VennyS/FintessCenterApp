@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FitnessCenter
 {
@@ -64,44 +65,6 @@ namespace FitnessCenter
                     topMargin += btnName.Height + 5;
                 }
             }
-
-            /*foreach (Class @class in _classes)
-            {
-                // Проверяем, что класс проходит в выбранный день
-                if (@class.dateTime.Date == monthCalendar1.SelectionStart)
-                {
-                    Button btnName = new Button();
-                    btnName.Text = @class.name;
-                    btnName.Size = new Size(100, 22);
-                    btnName.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
-                    availableSchedulePanel1.Controls.Add(btnName);
-
-                    int leftMargin = btnName.Width + 5;
-
-                    // Создаем список для хранения уникальных временных кнопок
-                    List<string> uniqueClasses = new List<string>();
-
-                    // Ищем все уникальные времена для класса с таким же именем и датой
-                    foreach (Class classTime in _classes.Where(c => c.name == @class.name && c.dateTime.Date == @class.dateTime.Date))
-                    {
-                        // Проверяем, не добавлено ли уже такое время
-                        if (!uniqueClasses.Contains(classTime.name))
-                        {
-                            Button btnTime = new Button();
-                            btnTime.Text = classTime.dateTime.ToString("HH:mm"); // Используем дату класса для вывода времени
-                            btnTime.Size = new Size(50, 22);
-                            btnTime.Location = new Point(leftMargin, topMargin);
-                            leftMargin += btnTime.Width + 5;
-                            availableSchedulePanel1.Controls.Add(btnTime);
-
-                            // Добавляем время в список уникальных времен
-                            uniqueClasses.Add(classTime.name);
-                        }
-                    }
-
-                    topMargin += btnName.Height + 5;
-                }
-            }*/
         }
 
         private bool ShowClientsContains(string text = "")
@@ -110,7 +73,7 @@ namespace FitnessCenter
             var buttons = searchResultsClientsPanel1.Controls.OfType<Button>().ToArray();
             foreach (Button button in buttons) searchResultsClientsPanel1.Controls.Remove(button);
 
-            bool anyItemContains = false; // 
+            bool anyItemContains = false;
             int topMargin = 0; // отступ сверху для первой кнопки
 
             foreach (Client client in _clients)
@@ -227,10 +190,10 @@ namespace FitnessCenter
         {
             _choosedClient = client;
             clientNameLabel1.Text = _choosedClient.full_name;
-            birthDateLabel2.Text = _choosedClient.date_of_birth.ToString();
-            weightLabel3.Text = _choosedClient.weight_kg.ToString();
-            heightLabel4.Text = _choosedClient.height_cm.ToString();
-            classesRestLabel5.Text = "осталось занятий: " + _choosedClient.remaining_visits.ToString();
+            birthDateLabel2.Text = _choosedClient.date_of_birth.Date.ToString("dd.MM.yyyy");
+            weightLabel3.Text = $"вес: {_choosedClient.weight_kg}";
+            heightLabel4.Text = $"рост: {_choosedClient.height_cm}";
+            classesRestLabel5.Text = $"осталось занятий: {_choosedClient.remaining_visits}";
         }
 
         private void backFromClientInfoButton4_Click(object sender, EventArgs e)
@@ -293,7 +256,52 @@ namespace FitnessCenter
 
         private void visitHistoryButton1_Click(object sender, EventArgs e)
         {
+            clientInfoPanel3.Visible = false;
+            visitHistoryPanel6.Visible = true;
+            setUpVisitHistoryPanel();
+        }
 
+        private void setUpVisitHistoryPanel()
+        {
+            var buttons = visitsShowPanel1.Controls.OfType<Button>().ToArray();
+            foreach (var button in buttons) { visitsShowPanel1.Controls.Remove(button); }
+
+            clientNameLabel2.Text = _choosedClient.full_name;
+            int topMargin = 0; // отступ сверху для первой кнопки
+            bool anyItemContains = false;
+
+            foreach (Class @class in _choosedClient.classes)
+            {
+                Button btnClass = new Button();
+                btnClass.Text = @class.dateTime.ToString() + $" направление: {@class.name.ToLower()}";
+                btnClass.Size = new Size(330, 22);
+                /*btnClass.Click += (sender, e) => ClientButton_Click(client);*/
+                btnClass.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
+                Button btnDeleteClass = new Button();
+                btnDeleteClass.Text = "Удалить";
+                btnDeleteClass.Size = new Size(94, 22);
+                btnDeleteClass.Click += (sender, e) => deleteClass(@class);
+                btnDeleteClass.Location = new Point(btnClass.Width + 11, topMargin); // каждая кнопка размещается на новой строке
+                visitsShowPanel1.Controls.Add(btnClass);
+                visitsShowPanel1.Controls.Add(btnDeleteClass);
+
+                topMargin += btnClass.Height + 5;
+                anyItemContains = true;
+            }
+            if (!anyItemContains) notFoundVisitsLabel1.Visible = true;
+            else notFoundVisitsLabel1.Visible = false;
+        }
+
+        private void deleteClass(Class @class)
+        {
+            _choosedClient.classes.Remove(@class);
+            setUpVisitHistoryPanel();
+        }
+
+        private void backFromVisitHistoryButton1_Click(object sender, EventArgs e)
+        {
+            clientInfoPanel3.Visible = true;
+            visitHistoryPanel6.Visible = false;
         }
     }
 }
