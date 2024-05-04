@@ -82,7 +82,7 @@ namespace FitnessCenter
                     Button deleteClient = new Button();
                     deleteClient.Text = "Удалить";
                     deleteClient.Size = new Size(94, 22);
-                    deleteClient.Click += (sender, e) => ClientButton_Click(client);
+                    deleteClient.Click += (sender, e) => DeleteClientButton_Click(client, text);
                     deleteClient.Location = new Point(btnClient.Width+11, topMargin); // каждая кнопка размещается на новой строке
                     searchResultsClientsPanel1.Controls.Add(btnClient);
                     searchResultsClientsPanel1.Controls.Add(deleteClient);
@@ -103,6 +103,20 @@ namespace FitnessCenter
             showClientsPanel1.Visible = false;
             setUpInfoPanel(client);
             clientInfoPanel3.Visible = true;
+        }
+
+        private void DeleteClientButton_Click(Client choosedClient, string text)
+        {
+            
+            foreach (Client client in _clients)
+            {
+                if (choosedClient == client)
+                {
+                    _clients.Remove(client);
+                    ShowClientsContains(text);
+                    return;
+                }
+            }
         }
 
         private void showOnlyPanel(string target)
