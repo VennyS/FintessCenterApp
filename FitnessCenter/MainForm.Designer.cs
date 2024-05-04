@@ -32,9 +32,9 @@ namespace FitnessCenter
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.titleLabel1 = new System.Windows.Forms.Label();
             this.titleScheduleLabel1 = new System.Windows.Forms.Label();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
@@ -93,6 +93,9 @@ namespace FitnessCenter
             this.clientNameLabel2 = new System.Windows.Forms.Label();
             this.visitsShowPanel1 = new System.Windows.Forms.Panel();
             this.notFoundVisitsLabel1 = new System.Windows.Forms.Label();
+            this.succesRegistrationSchedulePanel2 = new System.Windows.Forms.Panel();
+            this.backFromSuccesPanelButton1 = new System.Windows.Forms.Button();
+            this.succesLabel1 = new System.Windows.Forms.Label();
             this.schedulePanel1.SuspendLayout();
             this.clientsPanel2.SuspendLayout();
             this.clientInfoPanel3.SuspendLayout();
@@ -106,6 +109,7 @@ namespace FitnessCenter
             this.choosedPlanPanel5.SuspendLayout();
             this.visitHistoryPanel6.SuspendLayout();
             this.visitsShowPanel1.SuspendLayout();
+            this.succesRegistrationSchedulePanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // titleLabel1
@@ -274,17 +278,17 @@ namespace FitnessCenter
             // 
             // chart1
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chart1.Legends.Add(legend5);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(4, 69);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chart1.Series.Add(series5);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(269, 209);
             this.chart1.TabIndex = 8;
             this.chart1.Text = "chart1";
@@ -307,6 +311,7 @@ namespace FitnessCenter
             this.signUpButton2.TabIndex = 6;
             this.signUpButton2.Text = "записать на занятие";
             this.signUpButton2.UseVisualStyleBackColor = true;
+            this.signUpButton2.Click += new System.EventHandler(this.signUpButton2_Click);
             // 
             // classesRestLabel5
             // 
@@ -695,11 +700,48 @@ namespace FitnessCenter
             this.notFoundVisitsLabel1.TabIndex = 0;
             this.notFoundVisitsLabel1.Text = "Пока нет посещений";
             // 
+            // succesRegistrationSchedulePanel2
+            // 
+            this.succesRegistrationSchedulePanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(93)))), ((int)(((byte)(88)))));
+            this.succesRegistrationSchedulePanel2.Controls.Add(this.backFromSuccesPanelButton1);
+            this.succesRegistrationSchedulePanel2.Controls.Add(this.succesLabel1);
+            this.succesRegistrationSchedulePanel2.Location = new System.Drawing.Point(46, 314);
+            this.succesRegistrationSchedulePanel2.Name = "succesRegistrationSchedulePanel2";
+            this.succesRegistrationSchedulePanel2.Size = new System.Drawing.Size(291, 124);
+            this.succesRegistrationSchedulePanel2.TabIndex = 19;
+            this.succesRegistrationSchedulePanel2.Visible = false;
+            // 
+            // backFromSuccesPanelButton1
+            // 
+            this.backFromSuccesPanelButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(93)))), ((int)(((byte)(88)))));
+            this.backFromSuccesPanelButton1.BackgroundImage = global::FitnessCenter.Properties.Resources.back_icon;
+            this.backFromSuccesPanelButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.backFromSuccesPanelButton1.FlatAppearance.BorderSize = 0;
+            this.backFromSuccesPanelButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.backFromSuccesPanelButton1.Location = new System.Drawing.Point(0, 3);
+            this.backFromSuccesPanelButton1.Name = "backFromSuccesPanelButton1";
+            this.backFromSuccesPanelButton1.Size = new System.Drawing.Size(50, 33);
+            this.backFromSuccesPanelButton1.TabIndex = 10;
+            this.backFromSuccesPanelButton1.UseVisualStyleBackColor = false;
+            this.backFromSuccesPanelButton1.Click += new System.EventHandler(this.backFromSuccesPanelButton1_Click);
+            // 
+            // succesLabel1
+            // 
+            this.succesLabel1.AutoSize = true;
+            this.succesLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.succesLabel1.ForeColor = System.Drawing.SystemColors.Control;
+            this.succesLabel1.Location = new System.Drawing.Point(47, 23);
+            this.succesLabel1.Name = "succesLabel1";
+            this.succesLabel1.Size = new System.Drawing.Size(216, 88);
+            this.succesLabel1.TabIndex = 0;
+            this.succesLabel1.Text = "Имя, успешно записана!\r\n31.04.24 18:00\r\nНаправление: силовая\r\n\r\n";
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1924, 720);
+            this.Controls.Add(this.succesRegistrationSchedulePanel2);
             this.Controls.Add(this.visitHistoryPanel6);
             this.Controls.Add(this.choosedPlanPanel5);
             this.Controls.Add(this.abonementsPanel4);
@@ -737,6 +779,8 @@ namespace FitnessCenter
             this.visitHistoryPanel6.ResumeLayout(false);
             this.visitsShowPanel1.ResumeLayout(false);
             this.visitsShowPanel1.PerformLayout();
+            this.succesRegistrationSchedulePanel2.ResumeLayout(false);
+            this.succesRegistrationSchedulePanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -802,5 +846,8 @@ namespace FitnessCenter
         private Label clientNameLabel2;
         private Button backFromVisitHistoryButton1;
         private Label notFoundVisitsLabel1;
+        private Panel succesRegistrationSchedulePanel2;
+        private Button backFromSuccesPanelButton1;
+        private Label succesLabel1;
     }
 }

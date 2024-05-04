@@ -16,7 +16,7 @@ namespace FitnessCenter
     {
         private List<Client> _clients;
         private List<Class> _classes;
-        private Client _choosedClient;
+        private Client _choosedClient = null;
         private int _choosedPlan;
         public MainForm()
         {
@@ -52,11 +52,12 @@ namespace FitnessCenter
                     int leftMargin = btnName.Width + 5;
 
                     // Ищем все уникальные времена для данной группы классов
-                    foreach (Class classTime in group)
+                    foreach (Class @class in group)
                     {
                         Button btnTime = new Button();
-                        btnTime.Text = classTime.dateTime.ToString("HH:mm"); // Используем дату класса для вывода времени
+                        btnTime.Text = @class.dateTime.ToString("HH:mm"); // Используем дату класса для вывода времени
                         btnTime.Size = new Size(50, 22);
+                        btnTime.Click += (sender, e) => showUpSuccesClassRegistration(@class);
                         btnTime.Location = new Point(leftMargin, topMargin);
                         leftMargin += btnTime.Width + 5;
                         availableSchedulePanel1.Controls.Add(btnTime);
@@ -66,6 +67,12 @@ namespace FitnessCenter
                 }
                 dateScheduleLabel2.Text = monthCalendar1.SelectionStart.ToString("dd.MM.yyyy");
             }
+        }
+
+        private void showUpSuccesClassRegistration(Class @class)
+        {
+            succesRegistrationSchedulePanel2.Visible = true;
+            succesLabel1.Text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy hh:mm")}\nнаправление:{@class.name}";
         }
 
         private bool ShowClientsContains(string text = "")
@@ -137,6 +144,7 @@ namespace FitnessCenter
 
         private void scheduleButton1_Click(object sender, EventArgs e)
         {
+            _choosedClient = null;
             showOnlyPanel("schedulePanel1");
         }
 
@@ -303,6 +311,17 @@ namespace FitnessCenter
         {
             clientInfoPanel3.Visible = true;
             visitHistoryPanel6.Visible = false;
+        }
+
+        private void signUpButton2_Click(object sender, EventArgs e)
+        {
+            clientsPanel2.Visible = false;
+            schedulePanel1.Visible = true;
+        }
+
+        private void backFromSuccesPanelButton1_Click(object sender, EventArgs e)
+        {
+            succesRegistrationSchedulePanel2.Visible = false;
         }
     }
 }
