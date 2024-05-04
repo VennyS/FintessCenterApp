@@ -64,6 +64,7 @@ namespace FitnessCenter
 
                     topMargin += btnName.Height + 5;
                 }
+                dateScheduleLabel2.Text = monthCalendar1.SelectionStart.ToString("dd.MM.yyyy");
             }
         }
 
@@ -273,7 +274,7 @@ namespace FitnessCenter
             foreach (Class @class in _choosedClient.classes)
             {
                 Button btnClass = new Button();
-                btnClass.Text = @class.dateTime.ToString() + $" направление: {@class.name.ToLower()}";
+                btnClass.Text = @class.dateTime.ToString("dd.MM.yyyy HH:mm") + $" направление: {@class.name.ToLower()}";
                 btnClass.Size = new Size(330, 22);
                 /*btnClass.Click += (sender, e) => ClientButton_Click(client);*/
                 btnClass.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
