@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FitnessCenter.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace FitnessCenter
         public int weight_kg { get; set; }
         public int height_cm { get; set; }
         public int remaining_visits { get; set; }
+
+        public List<Class> classes { get; set; }
 
         public Client() { }
 
@@ -33,6 +36,6 @@ namespace FitnessCenter
             this.height_cm = height_cm;
         }
 
-        public void addClasses(int count) { remaining_visits += count; }
+        public void addAbonement(int count) { remaining_visits += count; }
     }
 }

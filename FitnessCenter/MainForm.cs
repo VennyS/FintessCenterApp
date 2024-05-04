@@ -14,7 +14,7 @@ namespace FitnessCenter
     public partial class MainForm : Form
     {
         private List<Client> _clients;
-        private List<GroupClass> _groupClasses;
+        private List<Class> _classes;
         private Client _choosedClient;
         private int _choosedPlan;
         public MainForm()
@@ -24,7 +24,7 @@ namespace FitnessCenter
             Manager manager = new Manager();
 
             _clients = manager.GetClients();
-            _groupClasses = manager.GetClasses();
+            _classes = manager.GetClasses();
 
             ShowGroupClasses();
         }
@@ -33,23 +33,28 @@ namespace FitnessCenter
         {
             availableSchedulePanel1.Controls.Clear();
             int topMargin = 0;
-            foreach (GroupClass groupClass in _groupClasses)
+
+            foreach (var group in _classes.GroupBy(c => c.name))
             {
-                // отступ сверху для первой кнопки
-                if (groupClass.date == monthCalendar1.SelectionStart)
+                Class firstClass = group.First();
+                DateTime classDate = firstClass.dateTime.Date;
+
+                if (classDate == monthCalendar1.SelectionStart)
                 {
+                    // Создаем кнопку для имени класса
                     Button btnName = new Button();
-                    btnName.Text = groupClass.name;
+                    btnName.Text = group.Key;
                     btnName.Size = new Size(100, 22);
                     btnName.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
                     availableSchedulePanel1.Controls.Add(btnName);
 
-
                     int leftMargin = btnName.Width + 5;
-                    foreach (string time in groupClass.times)
+
+                    // Ищем все уникальные времена для данной группы классов
+                    foreach (Class classTime in group)
                     {
                         Button btnTime = new Button();
-                        btnTime.Text = time;
+                        btnTime.Text = classTime.dateTime.ToString("HH:mm"); // Используем дату класса для вывода времени
                         btnTime.Size = new Size(50, 22);
                         btnTime.Location = new Point(leftMargin, topMargin);
                         leftMargin += btnTime.Width + 5;
@@ -59,6 +64,44 @@ namespace FitnessCenter
                     topMargin += btnName.Height + 5;
                 }
             }
+
+            /*foreach (Class @class in _classes)
+            {
+                // Проверяем, что класс проходит в выбранный день
+                if (@class.dateTime.Date == monthCalendar1.SelectionStart)
+                {
+                    Button btnName = new Button();
+                    btnName.Text = @class.name;
+                    btnName.Size = new Size(100, 22);
+                    btnName.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
+                    availableSchedulePanel1.Controls.Add(btnName);
+
+                    int leftMargin = btnName.Width + 5;
+
+                    // Создаем список для хранения уникальных временных кнопок
+                    List<string> uniqueClasses = new List<string>();
+
+                    // Ищем все уникальные времена для класса с таким же именем и датой
+                    foreach (Class classTime in _classes.Where(c => c.name == @class.name && c.dateTime.Date == @class.dateTime.Date))
+                    {
+                        // Проверяем, не добавлено ли уже такое время
+                        if (!uniqueClasses.Contains(classTime.name))
+                        {
+                            Button btnTime = new Button();
+                            btnTime.Text = classTime.dateTime.ToString("HH:mm"); // Используем дату класса для вывода времени
+                            btnTime.Size = new Size(50, 22);
+                            btnTime.Location = new Point(leftMargin, topMargin);
+                            leftMargin += btnTime.Width + 5;
+                            availableSchedulePanel1.Controls.Add(btnTime);
+
+                            // Добавляем время в список уникальных времен
+                            uniqueClasses.Add(classTime.name);
+                        }
+                    }
+
+                    topMargin += btnName.Height + 5;
+                }
+            }*/
         }
 
         private bool ShowClientsContains(string text = "")
@@ -123,7 +166,7 @@ namespace FitnessCenter
         {
             foreach (Control control in this.Controls)
             {
-                if ((control is Panel) && (control.Name != target)) control.Visible = false;
+                if ((control is Panel) && (control.Name != target) && (control.Name != "splitter")) control.Visible = false;
                 else control.Visible = true;
             }
         }
@@ -232,7 +275,7 @@ namespace FitnessCenter
 
         private void acceptPlanButton3_Click(object sender, EventArgs e)
         {
-            _choosedClient.addClasses(_choosedPlan);
+            _choosedClient.addAbonement(_choosedPlan);
             choosedPlanPanel5.Visible = false;
             setUpInfoPanel(_choosedClient);
         }

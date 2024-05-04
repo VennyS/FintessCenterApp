@@ -147,7 +147,7 @@ namespace FitnessCenter
             this.scheduleButton1.Name = "scheduleButton1";
             this.scheduleButton1.Size = new System.Drawing.Size(174, 29);
             this.scheduleButton1.TabIndex = 8;
-            this.scheduleButton1.Text = "Расписание";
+            this.scheduleButton1.Text = "Групповые занятия";
             this.scheduleButton1.UseVisualStyleBackColor = true;
             this.scheduleButton1.Click += new System.EventHandler(this.scheduleButton1_Click);
             // 
@@ -167,7 +167,7 @@ namespace FitnessCenter
             this.staffButton3.Name = "staffButton3";
             this.staffButton3.Size = new System.Drawing.Size(174, 29);
             this.staffButton3.TabIndex = 10;
-            this.staffButton3.Text = "Сотрудники";
+            this.staffButton3.Text = "Индивидуальные занятия";
             this.staffButton3.UseVisualStyleBackColor = true;
             this.staffButton3.Click += new System.EventHandler(this.staffButton3_Click);
             // 

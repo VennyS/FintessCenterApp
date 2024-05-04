@@ -1,48 +1,41 @@
 ﻿using FitnessCenter.Resources;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace FitnessCenter
 {
     internal class Manager
     {
         private List<Client> _clients;
-        private List<GroupClass> _groupClasses;
+        private List<Class> _groupClasses;
 
         public Manager()
         {
-            _clients = LoadClientsFromJson("data.json");
-            _groupClasses = LoadClassesFromJSON("data.json");
+            _clients = new List<Client>{
+            new Client("Иван Иванов", new DateTime(1990, 5, 10), 75, 180, 7),
+            new Client("Мария Петрова", new DateTime(1985, 12, 20), 62, 165, 7),
+            new Client("Алексей Сидоров", new DateTime(1988, 8, 15), 80, 175, 7),
+            new Client("Елена Козлова", new DateTime(1992, 3, 25), 68, 170, 7),
+            new Client("Павел Николаев", new DateTime(1995, 11, 8), 85, 185, 7),
+            new Client("Анна Смирнова", new DateTime(1983, 9, 30), 70, 160, 7),
+            new Client("Дмитрий Игнатьев", new DateTime(1993, 7, 12), 78, 175, 7)
+            };
+
+            _groupClasses = new List<Class>
+            {
+                new Class("Йога", new DateTime(2024, 5, 6, 9, 0, 0)),
+                new Class("Йога", new DateTime(2024, 5, 6, 16, 30, 0)),
+                new Class("Стретчинг", new DateTime(2024, 5, 4, 10, 30, 0)),
+                new Class("Стретчинг", new DateTime(2024, 5, 4, 18, 0, 0)),
+                new Class("Аэробика", new DateTime(2024, 5, 6, 11, 0, 0)),
+                new Class("Аэробика", new DateTime(2024, 5, 6, 17, 30, 0)),
+                new Class("Функциональная тренировка", new DateTime(2024, 5, 4, 13, 0, 0)),
+                new Class("Функциональная тренировка", new DateTime(2024, 5, 4, 19, 0, 0))
+            };
         }
 
-        private List<Client> LoadClientsFromJson(string jsonFilePath)
-        {
-            string json = File.ReadAllText(jsonFilePath);
-            var jsonObject = JsonConvert.DeserializeObject<JObject>(json);
-            var clientsArray = jsonObject["clients"].ToString();
-            return JsonConvert.DeserializeObject<List<Client>>(clientsArray);
-        }
+        public List<Client> GetClients() {  return _clients; }
 
-        private List<GroupClass> LoadClassesFromJSON(string jsonFilePath)
-        {
-            string json = File.ReadAllText(jsonFilePath);
-            var jsonObject = JsonConvert.DeserializeObject<JObject>(json);
-            var classesArray = jsonObject["group_classes"].ToString();
-            return JsonConvert.DeserializeObject<List<GroupClass>>(classesArray);            
-        }
-
-
-        public List<Client> GetClients()
-        {
-            return _clients;
-        }
-
-        public List<GroupClass> GetClasses()
-        {
-            return _groupClasses;
-        }
+        public List<Class> GetClasses() { return _groupClasses; }
     }
 }
