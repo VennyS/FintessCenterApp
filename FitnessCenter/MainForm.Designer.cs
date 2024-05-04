@@ -32,9 +32,9 @@ namespace FitnessCenter
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.titleLabel1 = new System.Windows.Forms.Label();
             this.titleScheduleLabel1 = new System.Windows.Forms.Label();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
@@ -256,6 +256,8 @@ namespace FitnessCenter
             this.backFromClientInfoButton4.BackColor = System.Drawing.Color.White;
             this.backFromClientInfoButton4.BackgroundImage = global::FitnessCenter.Properties.Resources.back_icon;
             this.backFromClientInfoButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.backFromClientInfoButton4.FlatAppearance.BorderSize = 0;
+            this.backFromClientInfoButton4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.backFromClientInfoButton4.Location = new System.Drawing.Point(400, 4);
             this.backFromClientInfoButton4.Name = "backFromClientInfoButton4";
             this.backFromClientInfoButton4.Size = new System.Drawing.Size(50, 33);
@@ -265,17 +267,17 @@ namespace FitnessCenter
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(4, 69);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(269, 209);
             this.chart1.TabIndex = 8;
             this.chart1.Text = "chart1";
@@ -530,6 +532,8 @@ namespace FitnessCenter
             this.backFromAbonementsButton4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(93)))), ((int)(((byte)(88)))));
             this.backFromAbonementsButton4.BackgroundImage = global::FitnessCenter.Properties.Resources.back_icon;
             this.backFromAbonementsButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.backFromAbonementsButton4.FlatAppearance.BorderSize = 0;
+            this.backFromAbonementsButton4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.backFromAbonementsButton4.Location = new System.Drawing.Point(3, 3);
             this.backFromAbonementsButton4.Name = "backFromAbonementsButton4";
             this.backFromAbonementsButton4.Size = new System.Drawing.Size(50, 33);
@@ -605,6 +609,8 @@ namespace FitnessCenter
             this.backFromChosedPlanButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(93)))), ((int)(((byte)(88)))));
             this.backFromChosedPlanButton3.BackgroundImage = global::FitnessCenter.Properties.Resources.back_icon;
             this.backFromChosedPlanButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.backFromChosedPlanButton3.FlatAppearance.BorderSize = 0;
+            this.backFromChosedPlanButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.backFromChosedPlanButton3.Location = new System.Drawing.Point(3, 3);
             this.backFromChosedPlanButton3.Name = "backFromChosedPlanButton3";
             this.backFromChosedPlanButton3.Size = new System.Drawing.Size(50, 33);
