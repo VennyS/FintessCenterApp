@@ -69,5 +69,7 @@ namespace FitnessCenter
         public List<Client> GetClients() {  return _clients; }
 
         public List<Class> GetClasses() { return _groupClasses; }
+
+        public List<Employee> GetEmployees() { return _employees; }
     }
 }

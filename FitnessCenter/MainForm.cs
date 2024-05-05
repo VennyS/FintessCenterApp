@@ -17,6 +17,7 @@ namespace FitnessCenter
     {
         private List<Client> _clients;
         private List<Class> _classes;
+        private List<Employee> _employees;
         private Client _choosedClient = null;
         private Class _choosedClass = null;
         private int _choosedPlan;
@@ -28,6 +29,7 @@ namespace FitnessCenter
 
             _clients = manager.GetClients();
             _classes = manager.GetClasses();
+            _employees = manager.GetEmployees();
 
             ShowGroupClasses();
         }
@@ -176,6 +178,39 @@ namespace FitnessCenter
             }
         }
 
+        private void setUpStaffPanel(string text = "")
+        {
+            var buttons = searchResultsStaffPanel1.Controls.OfType<Button>().ToArray();
+            foreach (var button in buttons) { searchResultsStaffPanel1.Controls.Remove(button); }
+
+            int topMargin = 0; // отступ сверху для первой кнопки
+            bool anyItemContains = false;
+
+            foreach (Employee employee in _employees)
+            {
+                if ((employee.Name.ToLower().Contains(text.ToLower())) || (employee.degree.ToLower().Contains(text.ToLower())))
+                {
+                    Button btnClass = new Button();
+                    btnClass.Text = $"{employee.Name}\n{employee.degree}";
+                    btnClass.Size = new Size(330, 44);
+                    /*btnClass.Click += (sender, e) => ClientButton_Click(client);*/
+                    btnClass.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
+                    Button btnDeleteClass = new Button();
+                    btnDeleteClass.Text = "Удалить";
+                    btnDeleteClass.Size = new Size(94, 22);
+                    /*btnDeleteClass.Click += (sender, e) => deleteClass(@class);*/
+                    btnDeleteClass.Location = new Point(btnClass.Width + 11, topMargin); // каждая кнопка размещается на новой строке
+                    searchResultsStaffPanel1.Controls.Add(btnClass);
+                    searchResultsStaffPanel1.Controls.Add(btnDeleteClass);
+
+                    topMargin += btnClass.Height + 5;
+                    anyItemContains = true;
+                }                
+            }
+            if (!anyItemContains) notFoundStaffLabel1.Visible = true;
+            else notFoundStaffLabel1.Visible = false;
+        }
+
         private void scheduleButton1_Click(object sender, EventArgs e)
         {
             _choosedClient = null;
@@ -190,6 +225,7 @@ namespace FitnessCenter
 
         private void staffButton3_Click(object sender, EventArgs e)
         {
+            setUpStaffPanel();
             showOnlyPanel("staffPanel3");
         }
 
@@ -373,6 +409,11 @@ namespace FitnessCenter
             ShowGroupClasses(_choosedClient);
             clientInfoPanel3.Visible = false;
             showClientsPanel1.Visible = true;
+        }
+
+        private void searchStaffTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            setUpStaffPanel(searchStaffTextBox1.Text);
         }
     }
 }

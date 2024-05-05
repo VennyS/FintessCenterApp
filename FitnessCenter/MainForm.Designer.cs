@@ -32,9 +32,9 @@ namespace FitnessCenter
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.titleLabel1 = new System.Windows.Forms.Label();
             this.titleScheduleLabel1 = new System.Windows.Forms.Label();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
@@ -75,7 +75,7 @@ namespace FitnessCenter
             this.staffPanel3 = new System.Windows.Forms.Panel();
             this.staffLabel1 = new System.Windows.Forms.Label();
             this.searchResultsStaffPanel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.notFoundStaffLabel1 = new System.Windows.Forms.Label();
             this.searchStaffTextBox1 = new System.Windows.Forms.TextBox();
             this.abonementsPanel4 = new System.Windows.Forms.Panel();
             this.backFromAbonementsButton4 = new System.Windows.Forms.Button();
@@ -231,9 +231,9 @@ namespace FitnessCenter
             // clientsPanel2
             // 
             this.clientsPanel2.Controls.Add(this.titleClientsLabel1);
-            this.clientsPanel2.Controls.Add(this.clientInfoPanel3);
             this.clientsPanel2.Controls.Add(this.showClientsPanel1);
             this.clientsPanel2.Controls.Add(this.newClientPanel2);
+            this.clientsPanel2.Controls.Add(this.clientInfoPanel3);
             this.clientsPanel2.Location = new System.Drawing.Point(710, 370);
             this.clientsPanel2.Name = "clientsPanel2";
             this.clientsPanel2.Size = new System.Drawing.Size(485, 332);
@@ -284,19 +284,19 @@ namespace FitnessCenter
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend2.Name = "Посещения";
-            this.chart1.Legends.Add(legend2);
+            chartArea5.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea5);
+            legend5.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend5.Name = "Посещения";
+            this.chart1.Legends.Add(legend5);
             this.chart1.Location = new System.Drawing.Point(4, 35);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Посещения";
-            series2.LegendText = "Посещения";
-            series2.Name = "Посещения";
-            this.chart1.Series.Add(series2);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Посещения";
+            series5.LegendText = "Посещения";
+            series5.Name = "Посещения";
+            this.chart1.Series.Add(series5);
             this.chart1.Size = new System.Drawing.Size(269, 243);
             this.chart1.TabIndex = 8;
             this.chart1.Text = "chart1";
@@ -512,20 +512,20 @@ namespace FitnessCenter
             // 
             // searchResultsStaffPanel1
             // 
-            this.searchResultsStaffPanel1.Controls.Add(this.label1);
+            this.searchResultsStaffPanel1.Controls.Add(this.notFoundStaffLabel1);
             this.searchResultsStaffPanel1.Location = new System.Drawing.Point(2, 62);
             this.searchResultsStaffPanel1.Name = "searchResultsStaffPanel1";
             this.searchResultsStaffPanel1.Size = new System.Drawing.Size(441, 213);
             this.searchResultsStaffPanel1.TabIndex = 1;
             // 
-            // label1
+            // notFoundStaffLabel1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(80, 7);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(263, 16);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "По вашему запросу ничего не найдено";
+            this.notFoundStaffLabel1.AutoSize = true;
+            this.notFoundStaffLabel1.Location = new System.Drawing.Point(80, 7);
+            this.notFoundStaffLabel1.Name = "notFoundStaffLabel1";
+            this.notFoundStaffLabel1.Size = new System.Drawing.Size(263, 16);
+            this.notFoundStaffLabel1.TabIndex = 0;
+            this.notFoundStaffLabel1.Text = "По вашему запросу ничего не найдено";
             // 
             // searchStaffTextBox1
             // 
@@ -533,6 +533,7 @@ namespace FitnessCenter
             this.searchStaffTextBox1.Name = "searchStaffTextBox1";
             this.searchStaffTextBox1.Size = new System.Drawing.Size(440, 22);
             this.searchStaffTextBox1.TabIndex = 0;
+            this.searchStaffTextBox1.TextChanged += new System.EventHandler(this.searchStaffTextBox1_TextChanged);
             // 
             // abonementsPanel4
             // 
@@ -889,7 +890,7 @@ namespace FitnessCenter
         private Label clientNameLabel1;
         private Panel staffPanel3;
         private Panel searchResultsStaffPanel1;
-        private Label label1;
+        private Label notFoundStaffLabel1;
         private TextBox searchStaffTextBox1;
         private Label staffLabel1;
         private DateTimePicker dateTimePicker1;
