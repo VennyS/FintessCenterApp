@@ -17,6 +17,7 @@ namespace FitnessCenter
         private List<Client> _clients;
         private List<Class> _classes;
         private Client _choosedClient = null;
+        private Class _choosedClass = null;
         private int _choosedPlan;
         public MainForm()
         {
@@ -30,7 +31,7 @@ namespace FitnessCenter
             ShowGroupClasses();
         }
 
-        private void ShowGroupClasses()
+        private void ShowGroupClasses(Client client = null)
         {
             availableSchedulePanel1.Controls.Clear();
             int topMargin = 0;
@@ -61,6 +62,10 @@ namespace FitnessCenter
                         btnTime.Location = new Point(leftMargin, topMargin);
                         leftMargin += btnTime.Width + 5;
                         availableSchedulePanel1.Controls.Add(btnTime);
+                        if ((@class.dateTime.Date < DateTime.Now) || (!(client is null) && (client.classes.Contains(@class))))
+                        {
+                            btnTime.Enabled = false;
+                        }
                     }
 
                     topMargin += btnName.Height + 5;
@@ -69,10 +74,23 @@ namespace FitnessCenter
             }
         }
 
+        // TODO
         private void showUpSuccesClassRegistration(Class @class)
         {
-            succesRegistrationSchedulePanel2.Visible = true;
-            succesLabel1.Text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy hh:mm")}\nнаправление:{@class.name}";
+            if (_choosedClient is null)
+            {
+                schedulePanel1.Visible = false;
+                clientsPanel2.Visible = true;
+                ShowClientsContains();
+                _choosedClass = @class;
+            }
+            else
+            {
+                succesRegistrationSchedulePanel2.Visible = true;
+                succesLabel1.Text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy hh:mm")}\nнаправление:{@class.name}";
+                _choosedClient = null;
+                _choosedClass = null;
+            }            
         }
 
         private bool ShowClientsContains(string text = "")
@@ -114,9 +132,19 @@ namespace FitnessCenter
 
         private void ClientButton_Click(Client client)
         {
-            showClientsPanel1.Visible = false;
-            setUpInfoPanel(client);
-            clientInfoPanel3.Visible = true;
+            if (_choosedClass == null)
+            {
+                showClientsPanel1.Visible = false;
+                setUpInfoPanel(client);
+                clientInfoPanel3.Visible = true;
+            }
+            else
+            {
+                succesRegistrationSchedulePanel2.Visible = true;
+                succesLabel1.Text = $"{client.full_name}, успешно записан(а)!\n{_choosedClass.dateTime.ToString("dd.MM.yy hh:mm")}\nнаправление:{_choosedClass.name}";
+                _choosedClass = null;
+                _choosedClient = null;
+            }
         }
 
         private void DeleteClientButton_Click(Client choosedClient, string text)
@@ -317,6 +345,8 @@ namespace FitnessCenter
         {
             clientsPanel2.Visible = false;
             schedulePanel1.Visible = true;
+            clientInfoPanel3.Visible = false;
+            showClientsPanel1.Visible = true;
         }
 
         private void backFromSuccesPanelButton1_Click(object sender, EventArgs e)
