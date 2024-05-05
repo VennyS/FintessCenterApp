@@ -29,7 +29,14 @@ namespace FitnessCenter.Resources
             this.clients = clients;
         }
 
-        public void appendClient(Client client) { if (!this.clients.Contains(client)) this.clients.Add(client); }
+        public void appendClient(Client client)
+        {
+            if (!(this.clients is null))
+            {
+                if (!this.clients.Contains(client)) this.clients.Add(client);
+            }
+            else this.clients = new List<Client>() { client };
+        }
 
         public void removeClient(Client client) {  this.clients.Remove(client); }
     }

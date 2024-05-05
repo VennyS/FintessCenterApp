@@ -20,6 +20,7 @@ namespace FitnessCenter
         private List<Employee> _employees;
         private Client _choosedClient = null;
         private Class _choosedClass = null;
+        private Employee _choosedEmployee = null;
         private int _choosedPlan;
         public MainForm()
         {
@@ -137,7 +138,7 @@ namespace FitnessCenter
 
         private void ClientButton_Click(Client client)
         {
-            if (_choosedClass == null)
+            if (_choosedClass is null && _choosedEmployee is null)
             {
                 showClientsPanel1.Visible = false;
                 setUpInfoPanel(client);
@@ -149,9 +150,11 @@ namespace FitnessCenter
                 client.appendClass(_choosedClass);
                 _choosedClass.appendClient(client);
 
-                succesLabel1.Text = $"{client.full_name}, успешно записан(а)!\n{_choosedClass.dateTime.ToString("dd.MM.yy HH:mm")}\nнаправление:{_choosedClass.name}";
+                string variousText = _choosedEmployee is null ? $"направление :{_choosedClass.name}" : $"тренер {_choosedEmployee.Name}";
+                succesLabel1.Text = $"{client.full_name}, успешно записан(а)!\n{_choosedClass.dateTime.ToString("dd.MM.yy HH:mm")}\n" + variousText;
                 _choosedClass = null;
                 _choosedClient = null;
+                _choosedEmployee = null;
             }
         }
 
@@ -169,7 +172,7 @@ namespace FitnessCenter
             }
         }
 
-        private void showOnlyPanel(string target)
+        private void showOnlyMainPanel(string target)
         {
             foreach (Control control in this.Controls)
             {
@@ -192,8 +195,8 @@ namespace FitnessCenter
                 {
                     Button btnClass = new Button();
                     btnClass.Text = $"{employee.Name}\n{employee.degree}";
-                    btnClass.Size = new Size(330, 44);
-                    /*btnClass.Click += (sender, e) => ClientButton_Click(client);*/
+                    btnClass.Size = new Size(330, 35);
+                    btnClass.Click += (sender, e) => employeeButtonClick(employee);
                     btnClass.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
                     Button btnDeleteClass = new Button();
                     btnDeleteClass.Text = "Удалить";
@@ -211,22 +214,92 @@ namespace FitnessCenter
             else notFoundStaffLabel1.Visible = false;
         }
 
+        private void showIndividualClasses()
+        {
+            var buttons = individualClassesPanel1.Controls.OfType<Button>().ToArray();
+            foreach (var button in buttons) { individualClassesPanel1.Controls.Remove(button); }
+
+            invidualClassesLabel2.Text = monthCalendar2.SelectionStart.ToString("dd.MM.yy");
+
+            int topMargin = 0; // отступ сверху для первой кнопки
+            bool anyItemContains = false;
+
+            foreach (Class @class in _choosedEmployee.classes)
+            {
+                if (@class.dateTime.Date == monthCalendar2.SelectionStart)
+                {
+                    Button btnClass = new Button();
+                    btnClass.Text = $"{@class.dateTime.ToString("HH:mm")}";
+                    btnClass.Size = new Size(100, 22);
+                    btnClass.Click += (sender, e) => individualClassButtonClick(@class);
+                    btnClass.Location = new Point((individualClassesPanel1.Width-btnClass.Width)/2, topMargin); // каждая кнопка размещается на новой строке
+                    /*Button btnDeleteClass = new Button();
+                    btnDeleteClass.Text = "Удалить";
+                    btnDeleteClass.Size = new Size(94, 22);
+                    *//*btnDeleteClass.Click += (sender, e) => deleteClass(@class);*//*
+                    btnDeleteClass.Location = new Point(btnClass.Width + 11, topMargin); // каждая кнопка размещается на новой строке*/
+                    individualClassesPanel1.Controls.Add(btnClass);
+                    /*searchResultsStaffPanel1.Controls.Add(btnDeleteClass);*/
+
+                    topMargin += btnClass.Height + 5;
+                    anyItemContains = true;
+                }
+            }
+            if (!anyItemContains) notFoundIndividualClassesLabel3.Visible = true;
+            else notFoundIndividualClassesLabel3.Visible = false;
+        }
+        private void setUpIndividualClasses()
+        {
+            employeeInfoButton1.Text = $"{_choosedEmployee.Name}\n{_choosedEmployee.degree}";
+            showIndividualClasses();
+        }
+
+        private void individualClassButtonClick(Class @class)
+        {
+            if (_choosedClient is null)
+            {
+                _choosedClass = @class;
+                showOnlyMainPanel("clientsPanel2");
+            }
+            else
+            {
+                succesRegistrationSchedulePanel2.Visible = true;
+                _choosedClient.appendClass(@class);
+                @class.appendClient(_choosedClient);
+
+                succesLabel1.Text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy HH:mm")}\n" +
+                    $"тренер {_choosedEmployee.Name}";
+                _choosedClass = null;
+                _choosedClient = null;
+                _choosedEmployee = null;
+            }
+        }
+
+        private void employeeButtonClick(Employee employee)
+        {
+            _choosedEmployee = employee;
+            searchStaffPanel1.Visible = false;
+            individualClassesPanel2.Visible = true;
+            setUpIndividualClasses();
+        }
+
         private void scheduleButton1_Click(object sender, EventArgs e)
         {
             _choosedClient = null;
-            showOnlyPanel("schedulePanel1");
+            showOnlyMainPanel("schedulePanel1");
+            searchStaffPanel1.Visible = true;
         }
 
         private void clientsButton2_Click(object sender, EventArgs e)
         {
             ShowClientsContains();
-            showOnlyPanel("clientsPanel2");
+            showOnlyMainPanel("clientsPanel2");
         }
 
         private void staffButton3_Click(object sender, EventArgs e)
         {
             setUpStaffPanel();
-            showOnlyPanel("staffPanel3");
+            showOnlyMainPanel("staffPanel3");
         }
 
         // TODO
@@ -414,6 +487,25 @@ namespace FitnessCenter
         private void searchStaffTextBox1_TextChanged(object sender, EventArgs e)
         {
             setUpStaffPanel(searchStaffTextBox1.Text);
+        }
+
+        private void monthCalendar2_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            setUpIndividualClasses();
+        }
+
+        private void employeeInfoButton1_Click(object sender, EventArgs e)
+        {
+            _choosedEmployee = null;
+            individualClassesPanel2.Visible = false;
+            searchStaffPanel1.Visible = true;
+        }
+
+        private void selectPersonalClassButton2_Click(object sender, EventArgs e)
+        {
+            showOnlyMainPanel("staffPanel3");
+            selectClassTypePanel7.Visible = false;
+            setUpStaffPanel();
         }
     }
 }
