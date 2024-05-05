@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace FitnessCenter
@@ -89,7 +90,7 @@ namespace FitnessCenter
                 succesRegistrationSchedulePanel2.Visible = true;
                 _choosedClient.appendClass(@class);
                 @class.appendClient(_choosedClient);
-                succesLabel1.Text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy hh:mm")}\nнаправление:{@class.name}";
+                succesLabel1.Text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy HH:mm")}\nнаправление:{@class.name}";
                 _choosedClient = null;
                 _choosedClass = null;
             }            
@@ -146,7 +147,7 @@ namespace FitnessCenter
                 client.appendClass(_choosedClass);
                 _choosedClass.appendClient(client);
 
-                succesLabel1.Text = $"{client.full_name}, успешно записан(а)!\n{_choosedClass.dateTime.ToString("dd.MM.yy hh:mm")}\nнаправление:{_choosedClass.name}";
+                succesLabel1.Text = $"{client.full_name}, успешно записан(а)!\n{_choosedClass.dateTime.ToString("dd.MM.yy HH:mm")}\nнаправление:{_choosedClass.name}";
                 _choosedClass = null;
                 _choosedClient = null;
             }
@@ -236,6 +237,14 @@ namespace FitnessCenter
             weightLabel3.Text = $"вес: {_choosedClient.weight_kg}";
             heightLabel4.Text = $"рост: {_choosedClient.height_cm}";
             classesRestLabel5.Text = $"осталось занятий: {_choosedClient.remaining_visits}";
+
+            Series series = chart1.Series.FindByName("Посещения");
+            series.Points.Clear();
+
+            foreach (var visit in client.visitsPerMonth)
+            {
+                series.Points.AddXY(visit.Key, visit.Value);
+            }
         }
 
         private void backFromClientInfoButton4_Click(object sender, EventArgs e)
@@ -336,7 +345,7 @@ namespace FitnessCenter
 
         private void deleteClass(Class @class)
         {
-            _choosedClient.classes.Remove(@class);
+            _choosedClient.removeClass(@class);
             setUpVisitHistoryPanel();
         }
 
@@ -348,16 +357,22 @@ namespace FitnessCenter
 
         private void signUpButton2_Click(object sender, EventArgs e)
         {
-            clientsPanel2.Visible = false;
-            schedulePanel1.Visible = true;
-            ShowGroupClasses(_choosedClient);
-            clientInfoPanel3.Visible = false;
-            showClientsPanel1.Visible = true;
+            selectClassTypePanel7.Visible = true;
         }
 
         private void backFromSuccesPanelButton1_Click(object sender, EventArgs e)
         {
             succesRegistrationSchedulePanel2.Visible = false;
+        }
+
+        private void selectGroupClassButton1_Click(object sender, EventArgs e)
+        {
+            clientsPanel2.Visible = false;
+            selectClassTypePanel7.Visible = false;
+            schedulePanel1.Visible = true;
+            ShowGroupClasses(_choosedClient);
+            clientInfoPanel3.Visible = false;
+            showClientsPanel1.Visible = true;
         }
     }
 }

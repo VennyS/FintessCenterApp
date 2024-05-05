@@ -15,17 +15,20 @@ namespace FitnessCenter
         public int height_cm { get; set; }
         public int remaining_visits { get; set; }
 
+        public Dictionary<string, int> visitsPerMonth { get; set; }
+
         public List<Class> classes { get; set; }
 
         public Client() { }
 
-        public Client(string full_name, DateTime date_of_birth, int weight_kg, int height_cm, int remaining_visits)
+        public Client(string full_name, DateTime date_of_birth, int weight_kg, int height_cm, int remaining_visits, Dictionary<string, int> visitsPerMonth = null)
         {
             this.full_name = full_name;
             this.date_of_birth = date_of_birth;
             this.weight_kg = weight_kg;
             this.height_cm = height_cm;
             this.remaining_visits = remaining_visits;
+            this.visitsPerMonth = visitsPerMonth;
         }
 
         public Client(string full_name, DateTime date_of_birth, int weight_kg, int height_cm)
@@ -41,5 +44,6 @@ namespace FitnessCenter
         public void setClasses(List<Class> classes) { this.classes = classes; }
 
         public void appendClass(Class @class) { if (!this.classes.Contains(@class)) this.classes.Add(@class); }
+        public void removeClass(Class @class) { this.classes.Remove(@class); }
     }
 }
