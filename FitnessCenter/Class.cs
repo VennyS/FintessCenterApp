@@ -28,5 +28,7 @@ namespace FitnessCenter.Resources
         {
             this.clients = clients;
         }
+
+        public void appendClient(Client client) { if (!this.clients.Contains(client)) this.clients.Add(client); }
     }
 }

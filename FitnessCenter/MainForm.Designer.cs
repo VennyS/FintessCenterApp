@@ -32,9 +32,9 @@ namespace FitnessCenter
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.titleLabel1 = new System.Windows.Forms.Label();
             this.titleScheduleLabel1 = new System.Windows.Forms.Label();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
@@ -225,9 +225,9 @@ namespace FitnessCenter
             // clientsPanel2
             // 
             this.clientsPanel2.Controls.Add(this.titleClientsLabel1);
+            this.clientsPanel2.Controls.Add(this.clientInfoPanel3);
             this.clientsPanel2.Controls.Add(this.showClientsPanel1);
             this.clientsPanel2.Controls.Add(this.newClientPanel2);
-            this.clientsPanel2.Controls.Add(this.clientInfoPanel3);
             this.clientsPanel2.Location = new System.Drawing.Point(710, 370);
             this.clientsPanel2.Name = "clientsPanel2";
             this.clientsPanel2.Size = new System.Drawing.Size(485, 332);
@@ -278,17 +278,17 @@ namespace FitnessCenter
             // 
             // chart1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            chartArea5.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chart1.Legends.Add(legend5);
             this.chart1.Location = new System.Drawing.Point(4, 69);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart1.Series.Add(series3);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.chart1.Series.Add(series5);
             this.chart1.Size = new System.Drawing.Size(269, 209);
             this.chart1.TabIndex = 8;
             this.chart1.Text = "chart1";
@@ -633,7 +633,7 @@ namespace FitnessCenter
             // 
             // choosedPlanButton1
             // 
-            this.choosedPlanButton1.Location = new System.Drawing.Point(107, 37);
+            this.choosedPlanButton1.Location = new System.Drawing.Point(95, 46);
             this.choosedPlanButton1.Name = "choosedPlanButton1";
             this.choosedPlanButton1.Size = new System.Drawing.Size(222, 35);
             this.choosedPlanButton1.TabIndex = 1;
@@ -707,7 +707,7 @@ namespace FitnessCenter
             this.succesRegistrationSchedulePanel2.Controls.Add(this.succesLabel1);
             this.succesRegistrationSchedulePanel2.Location = new System.Drawing.Point(46, 314);
             this.succesRegistrationSchedulePanel2.Name = "succesRegistrationSchedulePanel2";
-            this.succesRegistrationSchedulePanel2.Size = new System.Drawing.Size(291, 124);
+            this.succesRegistrationSchedulePanel2.Size = new System.Drawing.Size(321, 124);
             this.succesRegistrationSchedulePanel2.TabIndex = 19;
             this.succesRegistrationSchedulePanel2.Visible = false;
             // 
@@ -718,7 +718,7 @@ namespace FitnessCenter
             this.backFromSuccesPanelButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.backFromSuccesPanelButton1.FlatAppearance.BorderSize = 0;
             this.backFromSuccesPanelButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.backFromSuccesPanelButton1.Location = new System.Drawing.Point(0, 3);
+            this.backFromSuccesPanelButton1.Location = new System.Drawing.Point(-5, 3);
             this.backFromSuccesPanelButton1.Name = "backFromSuccesPanelButton1";
             this.backFromSuccesPanelButton1.Size = new System.Drawing.Size(50, 33);
             this.backFromSuccesPanelButton1.TabIndex = 10;

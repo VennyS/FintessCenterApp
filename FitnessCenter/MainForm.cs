@@ -87,6 +87,8 @@ namespace FitnessCenter
             else
             {
                 succesRegistrationSchedulePanel2.Visible = true;
+                _choosedClient.appendClass(@class);
+                @class.appendClient(_choosedClient);
                 succesLabel1.Text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy hh:mm")}\nнаправление:{@class.name}";
                 _choosedClient = null;
                 _choosedClass = null;
@@ -141,6 +143,9 @@ namespace FitnessCenter
             else
             {
                 succesRegistrationSchedulePanel2.Visible = true;
+                client.appendClass(_choosedClass);
+                _choosedClass.appendClient(client);
+
                 succesLabel1.Text = $"{client.full_name}, успешно записан(а)!\n{_choosedClass.dateTime.ToString("dd.MM.yy hh:mm")}\nнаправление:{_choosedClass.name}";
                 _choosedClass = null;
                 _choosedClient = null;
@@ -288,7 +293,7 @@ namespace FitnessCenter
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
-            ShowGroupClasses();
+            ShowGroupClasses(_choosedClient);
         }
 
         private void visitHistoryButton1_Click(object sender, EventArgs e)
@@ -345,6 +350,7 @@ namespace FitnessCenter
         {
             clientsPanel2.Visible = false;
             schedulePanel1.Visible = true;
+            ShowGroupClasses(_choosedClient);
             clientInfoPanel3.Visible = false;
             showClientsPanel1.Visible = true;
         }

@@ -39,5 +39,7 @@ namespace FitnessCenter
         public void addAbonement(int count) { remaining_visits += count; }
 
         public void setClasses(List<Class> classes) { this.classes = classes; }
+
+        public void appendClass(Class @class) { if (!this.classes.Contains(@class)) this.classes.Add(@class); }
     }
 }
