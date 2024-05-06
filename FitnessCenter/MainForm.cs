@@ -1,20 +1,16 @@
 ﻿using FitnessCenter.Resources;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FitnessCenter
 {
     public partial class MainForm : Form
     {
+        private Manager manager;
         private List<Client> _clients;
         private List<Class> _classes;
         private List<Employee> _employees;
@@ -26,7 +22,7 @@ namespace FitnessCenter
         {
             InitializeComponent();
 
-            Manager manager = new Manager();
+            manager = new Manager();
 
             _clients = manager.GetClients();
             _classes = manager.GetClasses();
@@ -45,7 +41,7 @@ namespace FitnessCenter
                 Class firstClass = group.First();
                 DateTime classDate = firstClass.dateTime.Date;
 
-                if (classDate == monthCalendar1.SelectionStart)
+                if (classDate == monthCalendar1.SelectionStart && firstClass.isGroup)
                 {
                     // Создаем кнопку для имени класса
                     Button btnName = new Button();
@@ -78,7 +74,6 @@ namespace FitnessCenter
             }
         }
 
-        // TODO
         private void showUpSuccesClassRegistration(Class @class)
         {
             if (_choosedClient is null)
@@ -179,6 +174,11 @@ namespace FitnessCenter
                 if ((control is Panel) && (control.Name != target) && (control.Name != "splitter")) control.Visible = false;
                 else control.Visible = true;
             }
+        }
+
+        private void showOnlyClientsPanel(string target)
+        {
+
         }
 
         private void setUpStaffPanel(string text = "")
@@ -305,7 +305,39 @@ namespace FitnessCenter
         // TODO
         private void analysButton4_Click(object sender, EventArgs e)
         {
-            ;
+            showOnlyMainPanel("analysisPanel4");
+            setUpAnalysis();
+
+        }
+
+        private void setUpAnalysis()
+        {
+            chart2.Series.Clear();
+
+            clientCountLabel2.Text = $"Количество клиентов: {manager.NewClientsInMonth(DateTime.Now)}";
+            incomeLabel3.Text = $"Прибыль в сотнях тысяч рублей: {manager.GetIncomeInThousand(DateTime.Now)}";
+
+            Series newClientsPerMonth = new Series();
+            newClientsPerMonth.Name = "Новые клиенты";
+            
+            foreach (var pair in manager.NewClientsPerMonth()) { newClientsPerMonth.Points.AddXY(pair.Key, pair.Value); }
+
+            Series averageVisitsPerMonth = new Series();
+            
+            averageVisitsPerMonth.Name = "Среднее количество посещений";
+            foreach (var pair in manager.AverageVisitsPerMonth()) { averageVisitsPerMonth.Points.AddXY(pair.Key, pair.Value); }
+
+            Series incomePerMonth = new Series();
+ 
+            incomePerMonth.Name = "Прибыль в сотнях тысяч рублей";
+            foreach (var pair in manager.GetIncomeInThousand())
+            {    
+                incomePerMonth.Points.AddXY(pair.Key, pair.Value);
+            }
+
+        chart2.Series.Add(newClientsPerMonth);
+            chart2.Series.Add(averageVisitsPerMonth);
+            chart2.Series.Add(incomePerMonth);
         }
 
         private void searchClientsTextBox_TextChanged(object sender, EventArgs e)

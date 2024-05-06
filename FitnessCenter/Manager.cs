@@ -1,6 +1,9 @@
 ﻿using FitnessCenter.Resources;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
 
 namespace FitnessCenter
 {
@@ -9,17 +12,19 @@ namespace FitnessCenter
         private List<Client> _clients;
         private List<Class> _groupClasses;
         private List<Employee> _employees;
+        private static Dictionary<string, int> _income;
 
         public Manager()
         {
-            _clients = new List<Client>{
-                new Client("Иван Иванов", new DateTime(1990, 5, 10), 75, 180, 7, new Dictionary<string, int> {{"Май", 5}, {"Апрель", 3}}),
-                new Client("Мария Петрова", new DateTime(1985, 12, 20), 62, 165, 7, new Dictionary<string, int> {{"Декабрь", 4}, {"Ноябрь", 2}}),
-                new Client("Алексей Сидоров", new DateTime(1988, 8, 15), 80, 175, 7, new Dictionary<string, int> {{"Август", 6}, {"Июль", 3}}),
-                new Client("Елена Козлова", new DateTime(1992, 3, 25), 68, 170, 7, new Dictionary<string, int> {{"Март", 3}, {"Февраль", 2}}),
-                new Client("Павел Николаев", new DateTime(1995, 11, 8), 85, 185, 7, new Dictionary<string, int> {{"Ноябрь", 8}, {"Октябрь", 2}}),
-                new Client("Анна Смирнова", new DateTime(1983, 9, 30), 70, 160, 7, new Dictionary<string, int> {{"Сентябрь", 2}, {"Август", 2}}),
-                new Client("Дмитрий Игнатьев", new DateTime(1993, 7, 12), 78, 175, 7, new Dictionary<string, int> {{"Июль", 7}, {"Июнь", 2}})
+            _clients = new List<Client>
+            { 
+                new Client("Иван Иванов", new DateTime(1990, 5, 10), 75, 180, 7, new DateTime(2024, 4, 1), new Dictionary<string, int> {{"Май", 5}, {"Апрель", 3}}),
+                new Client("Мария Петрова", new DateTime(1985, 12, 20), 62, 165, 7, new DateTime(2024, 10, 1), new Dictionary<string, int> {{"Декабрь", 4}, {"Ноябрь", 2}}),
+                new Client("Алексей Сидоров", new DateTime(1988, 8, 15), 80, 175, 7, new DateTime(2024, 6, 1), new Dictionary<string, int> {{"Август", 6}, {"Июль", 3}}),
+                new Client("Елена Козлова", new DateTime(1992, 3, 25), 68, 170, 7, new DateTime(2024, 2, 1), new Dictionary<string, int> {{"Март", 3}, {"Февраль", 2}}),
+                new Client("Павел Николаев", new DateTime(1995, 11, 8), 85, 185, 7, new DateTime(2024, 10, 1), new Dictionary<string, int> {{"Ноябрь", 8}, {"Октябрь", 2}}),
+                new Client("Анна Смирнова", new DateTime(1983, 9, 30), 70, 160, 7, new DateTime(2024, 8, 1), new Dictionary < string, int > { { "Сентябрь", 2 }, { "Август", 2 } }),
+                new Client("Дмитрий Игнатьев", new DateTime(1993, 7, 12), 78, 175, 7, new DateTime(2024, 5, 1), new Dictionary < string, int > { { "Июль", 7 }, { "Июнь", 2 } })
             };
 
             _groupClasses = new List<Class>
@@ -32,10 +37,10 @@ namespace FitnessCenter
                 new Class("Аэробика", new DateTime(2024, 5, 6, 17, 30, 0)),
                 new Class("Функциональная тренировка", new DateTime(2024, 5, 4, 13, 0, 0)),
                 new Class("Функциональная тренировка", new DateTime(2024, 5, 4, 19, 0, 0)),
-                new Class("Силовая", new DateTime(2024, 5, 6, 9, 0, 0)),
-                new Class("Силовая", new DateTime(2024, 5, 6, 16, 30, 0)),
-                new Class("Растяжка", new DateTime(2024, 5, 6, 9, 0, 0)),
-                new Class("Растяжка", new DateTime(2024, 5, 6, 16, 30, 0)),
+                new Class("Силовая", new DateTime(2024, 5, 6, 9, 0, 0), false),
+                new Class("Силовая", new DateTime(2024, 5, 6, 16, 30, 0), false),
+                new Class("Растяжка", new DateTime(2024, 5, 6, 9, 0, 0), false),
+                new Class("Растяжка", new DateTime(2024, 5, 6, 16, 30, 0), false),
             };
 
             // Добавляем случайных клиентов к каждому занятию
@@ -64,12 +69,110 @@ namespace FitnessCenter
                 new Employee("Сидоров Сидор", "тренер высшей категории", new List<Class> { _groupClasses[8], _groupClasses[11] }),
                 new Employee("Александров Александр", "тренер средней категории", new List<Class> { _groupClasses[9], _groupClasses[10] })
             };
+
+            _income = new Dictionary<string, int>
+            {
+                ["Февраль"] = 390000,
+                ["Март"] = 410000,
+                ["Апрель"] = 370000,
+                ["Май"] = 400000,
+            };
         }
+
+        public void AddIncome(int income, DateTime date)
+        {
+            string month = date.ToString("MMMM", new System.Globalization.CultureInfo("ru-RU"));
+            AddIncome(income, month);
+        }
+
+        public void AddIncome(int income,  string month)
+        {
+            if (_income.ContainsKey(month)) { _income[month] += income; }
+            else { _income[month] = income; }
+        }
+
+        public Dictionary<string, int> GetIncomeInThousand()
+        {
+            for (int i = 0; i < _income.Keys.Count; i++)
+            {
+                var incomeKey = _income.Keys.ElementAt(i);
+                _income[incomeKey] = (int)Math.Round(_income[incomeKey] / 100000.0);
+            }
+            return _income;
+        }
+
+        public int GetIncomeInThousand(DateTime date)
+        {
+            string month = FromDateMonthToRussianLocal(date);
+            return GetIncomeInThousand(month);
+        }
+
+        public int GetIncomeInThousand(string month)
+        {
+            if (_income.ContainsKey(month)) return (int)Math.Round(_income[month] / 100000.0);
+            else return 0;
+        }
+
+        public Dictionary<string, int> NewClientsPerMonth()
+        {
+            Dictionary <string, int> clientsPerMonth = new Dictionary<string, int>();
+            foreach (Client client in _clients)
+            {
+                string month = FromDateMonthToRussianLocal(client.registration_date);
+                if (clientsPerMonth.ContainsKey(month)) clientsPerMonth[month] += 1;
+                else clientsPerMonth[month] = 1;
+            }
+
+            return clientsPerMonth;
+        }
+
+        public int NewClientsInMonth(DateTime date)
+        {
+            Dictionary<string, int> clientsPerMonth = NewClientsPerMonth();
+            string month = FromDateMonthToRussianLocal(date);
+            if (clientsPerMonth.ContainsKey(month)) return clientsPerMonth[month];
+            else return 0;
+        }
+
+        public Dictionary<string, double> AverageVisitsPerMonth()
+        {
+            Dictionary<string, List<int>> visitsPerMonth = new Dictionary<string, List<int>>();
+
+            foreach (var client in _clients)
+            {
+                foreach (var visit in client.visitsPerMonth)
+                {
+                    string month = visit.Key;
+
+                    if (!visitsPerMonth.ContainsKey(month))
+                    {
+                        visitsPerMonth[month] = new List<int>() { visit.Value };
+                    }
+                    else visitsPerMonth[month].Add(visit.Value);
+                }
+            }
+
+            Dictionary<string, double> averageVisitsPerMonth = new Dictionary<string, double>();
+
+            foreach (var kvp in visitsPerMonth)
+            {
+                string month = kvp.Key;
+                List<int> visits = kvp.Value;
+
+                double averageVisits = visits.Count > 0 ? visits.Average() : 0;
+                averageVisitsPerMonth[month] = averageVisits;
+            }
+
+            return averageVisitsPerMonth;
+        }
+
 
         public List<Client> GetClients() {  return _clients; }
 
         public List<Class> GetClasses() { return _groupClasses; }
 
         public List<Employee> GetEmployees() { return _employees; }
+
+        private string FromDateMonthToRussianLocal(DateTime date) { return date.ToString("MMMM", new System.Globalization.CultureInfo("ru-RU")); }
     }
 }
