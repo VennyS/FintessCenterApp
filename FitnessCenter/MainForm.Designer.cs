@@ -32,12 +32,12 @@ namespace FitnessCenter
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend13 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.titleLabel1 = new System.Windows.Forms.Label();
             this.titleScheduleLabel1 = new System.Windows.Forms.Label();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
@@ -46,9 +46,11 @@ namespace FitnessCenter
             this.analysButton4 = new System.Windows.Forms.Button();
             this.staffButton3 = new System.Windows.Forms.Button();
             this.clientsButton2 = new System.Windows.Forms.Button();
-            this.availableSchedulePanel1 = new System.Windows.Forms.Panel();
             this.dateScheduleLabel2 = new System.Windows.Forms.Label();
             this.schedulePanel1 = new System.Windows.Forms.Panel();
+            this.signUpToGroupClassButton1 = new System.Windows.Forms.Button();
+            this.timesListBox2 = new System.Windows.Forms.ListBox();
+            this.typesOfClassesListBox1 = new System.Windows.Forms.ListBox();
             this.clientsPanel2 = new System.Windows.Forms.Panel();
             this.titleClientsLabel1 = new System.Windows.Forms.Label();
             this.showClientsPanel1 = new System.Windows.Forms.Panel();
@@ -77,8 +79,8 @@ namespace FitnessCenter
             this.clientNameLabel1 = new System.Windows.Forms.Label();
             this.staffPanel3 = new System.Windows.Forms.Panel();
             this.searchStaffPanel1 = new System.Windows.Forms.Panel();
-            this.searchResultsStaffPanel1 = new System.Windows.Forms.Panel();
-            this.notFoundStaffLabel1 = new System.Windows.Forms.Label();
+            this.selectEmployeeButton1 = new System.Windows.Forms.Button();
+            this.searchStaffResultListBox1 = new System.Windows.Forms.ListBox();
             this.searchStaffTextBox1 = new System.Windows.Forms.TextBox();
             this.staffLabel1 = new System.Windows.Forms.Label();
             this.abonementsPanel4 = new System.Windows.Forms.Panel();
@@ -109,14 +111,13 @@ namespace FitnessCenter
             this.employeeInfoButton1 = new System.Windows.Forms.Button();
             this.monthCalendar2 = new System.Windows.Forms.MonthCalendar();
             this.invidualClassesLabel2 = new System.Windows.Forms.Label();
-            this.individualClassesPanel1 = new System.Windows.Forms.Panel();
-            this.notFoundIndividualClassesLabel3 = new System.Windows.Forms.Label();
             this.invidualClassesLabel1 = new System.Windows.Forms.Label();
             this.analysisPanel4 = new System.Windows.Forms.Panel();
-            this.analysisLabel1 = new System.Windows.Forms.Label();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.clientCountLabel2 = new System.Windows.Forms.Label();
             this.incomeLabel3 = new System.Windows.Forms.Label();
+            this.clientCountLabel2 = new System.Windows.Forms.Label();
+            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.analysisLabel1 = new System.Windows.Forms.Label();
+            this.individualClassesListBox2 = new System.Windows.Forms.ListBox();
             this.schedulePanel1.SuspendLayout();
             this.clientsPanel2.SuspendLayout();
             this.showClientsPanel1.SuspendLayout();
@@ -126,7 +127,6 @@ namespace FitnessCenter
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.staffPanel3.SuspendLayout();
             this.searchStaffPanel1.SuspendLayout();
-            this.searchResultsStaffPanel1.SuspendLayout();
             this.abonementsPanel4.SuspendLayout();
             this.choosedPlanPanel5.SuspendLayout();
             this.visitHistoryPanel6.SuspendLayout();
@@ -134,7 +134,6 @@ namespace FitnessCenter
             this.succesRegistrationSchedulePanel2.SuspendLayout();
             this.selectClassTypePanel7.SuspendLayout();
             this.individualClassesPanel2.SuspendLayout();
-            this.individualClassesPanel1.SuspendLayout();
             this.analysisPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.SuspendLayout();
@@ -146,7 +145,7 @@ namespace FitnessCenter
             this.titleLabel1.Location = new System.Drawing.Point(518, 21);
             this.titleLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.titleLabel1.Name = "titleLabel1";
-            this.titleLabel1.Size = new System.Drawing.Size(134, 81);
+            this.titleLabel1.Size = new System.Drawing.Size(107, 65);
             this.titleLabel1.TabIndex = 4;
             this.titleLabel1.Text = "XFit";
             // 
@@ -154,17 +153,17 @@ namespace FitnessCenter
             // 
             this.titleScheduleLabel1.AutoSize = true;
             this.titleScheduleLabel1.Font = new System.Drawing.Font("Segoe UI", 18F);
-            this.titleScheduleLabel1.Location = new System.Drawing.Point(20, 21);
+            this.titleScheduleLabel1.Location = new System.Drawing.Point(21, 11);
             this.titleScheduleLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.titleScheduleLabel1.Name = "titleScheduleLabel1";
-            this.titleScheduleLabel1.Size = new System.Drawing.Size(282, 41);
+            this.titleScheduleLabel1.Size = new System.Drawing.Size(228, 32);
             this.titleScheduleLabel1.TabIndex = 5;
             this.titleScheduleLabel1.Text = "Групповые занятия";
             // 
             // monthCalendar1
             // 
             this.monthCalendar1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.monthCalendar1.Location = new System.Drawing.Point(23, 96);
+            this.monthCalendar1.Location = new System.Drawing.Point(23, 62);
             this.monthCalendar1.MaxSelectionCount = 1;
             this.monthCalendar1.MinDate = new System.DateTime(2024, 1, 1, 0, 0, 0, 0);
             this.monthCalendar1.Name = "monthCalendar1";
@@ -219,35 +218,60 @@ namespace FitnessCenter
             this.clientsButton2.UseVisualStyleBackColor = true;
             this.clientsButton2.Click += new System.EventHandler(this.clientsButton2_Click);
             // 
-            // availableSchedulePanel1
-            // 
-            this.availableSchedulePanel1.AutoScroll = true;
-            this.availableSchedulePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.availableSchedulePanel1.Location = new System.Drawing.Point(227, 126);
-            this.availableSchedulePanel1.Name = "availableSchedulePanel1";
-            this.availableSchedulePanel1.Size = new System.Drawing.Size(242, 177);
-            this.availableSchedulePanel1.TabIndex = 15;
-            // 
             // dateScheduleLabel2
             // 
-            this.dateScheduleLabel2.AutoSize = true;
-            this.dateScheduleLabel2.Location = new System.Drawing.Point(309, 96);
+            this.dateScheduleLabel2.Location = new System.Drawing.Point(286, 62);
             this.dateScheduleLabel2.Name = "dateScheduleLabel2";
-            this.dateScheduleLabel2.Size = new System.Drawing.Size(69, 16);
+            this.dateScheduleLabel2.Size = new System.Drawing.Size(69, 19);
             this.dateScheduleLabel2.TabIndex = 14;
             this.dateScheduleLabel2.Text = "25.04.2024";
             // 
             // schedulePanel1
             // 
+            this.schedulePanel1.Controls.Add(this.signUpToGroupClassButton1);
+            this.schedulePanel1.Controls.Add(this.timesListBox2);
+            this.schedulePanel1.Controls.Add(this.typesOfClassesListBox1);
             this.schedulePanel1.Controls.Add(this.monthCalendar1);
             this.schedulePanel1.Controls.Add(this.dateScheduleLabel2);
-            this.schedulePanel1.Controls.Add(this.availableSchedulePanel1);
             this.schedulePanel1.Controls.Add(this.titleScheduleLabel1);
             this.schedulePanel1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.schedulePanel1.Location = new System.Drawing.Point(710, 21);
+            this.schedulePanel1.Location = new System.Drawing.Point(710, 25);
             this.schedulePanel1.Name = "schedulePanel1";
-            this.schedulePanel1.Size = new System.Drawing.Size(474, 320);
+            this.schedulePanel1.Size = new System.Drawing.Size(474, 244);
             this.schedulePanel1.TabIndex = 13;
+            // 
+            // signUpToGroupClassButton1
+            // 
+            this.signUpToGroupClassButton1.Location = new System.Drawing.Point(201, 201);
+            this.signUpToGroupClassButton1.Name = "signUpToGroupClassButton1";
+            this.signUpToGroupClassButton1.Size = new System.Drawing.Size(240, 23);
+            this.signUpToGroupClassButton1.TabIndex = 17;
+            this.signUpToGroupClassButton1.Text = "записать";
+            this.signUpToGroupClassButton1.UseVisualStyleBackColor = true;
+            this.signUpToGroupClassButton1.Click += new System.EventHandler(this.signUpToGroupClassButton1_Click);
+            // 
+            // timesListBox2
+            // 
+            this.timesListBox2.DisplayMember = "datetime";
+            this.timesListBox2.FormatString = "t";
+            this.timesListBox2.FormattingEnabled = true;
+            this.timesListBox2.ItemHeight = 16;
+            this.timesListBox2.Location = new System.Drawing.Point(201, 151);
+            this.timesListBox2.Name = "timesListBox2";
+            this.timesListBox2.Size = new System.Drawing.Size(238, 36);
+            this.timesListBox2.TabIndex = 16;
+            // 
+            // typesOfClassesListBox1
+            // 
+            this.typesOfClassesListBox1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.typesOfClassesListBox1.DisplayMember = "name";
+            this.typesOfClassesListBox1.FormattingEnabled = true;
+            this.typesOfClassesListBox1.ItemHeight = 16;
+            this.typesOfClassesListBox1.Location = new System.Drawing.Point(199, 84);
+            this.typesOfClassesListBox1.Name = "typesOfClassesListBox1";
+            this.typesOfClassesListBox1.Size = new System.Drawing.Size(240, 52);
+            this.typesOfClassesListBox1.TabIndex = 15;
+            this.typesOfClassesListBox1.SelectedIndexChanged += new System.EventHandler(this.typesOfClassesListBox1_SelectedIndexChanged);
             // 
             // clientsPanel2
             // 
@@ -424,19 +448,19 @@ namespace FitnessCenter
             // 
             // chart1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend3.Name = "Посещения";
-            this.chart1.Legends.Add(legend3);
+            chartArea13.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea13);
+            legend13.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend13.Name = "Посещения";
+            this.chart1.Legends.Add(legend13);
             this.chart1.Location = new System.Drawing.Point(4, 35);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Посещения";
-            series3.LegendText = "Посещения";
-            series3.Name = "Посещения";
-            this.chart1.Series.Add(series3);
+            series13.ChartArea = "ChartArea1";
+            series13.Legend = "Посещения";
+            series13.LegendText = "Посещения";
+            series13.Name = "Посещения";
+            this.chart1.Series.Add(series13);
             this.chart1.Size = new System.Drawing.Size(269, 243);
             this.chart1.TabIndex = 8;
             this.chart1.Text = "chart1";
@@ -523,29 +547,33 @@ namespace FitnessCenter
             // 
             // searchStaffPanel1
             // 
-            this.searchStaffPanel1.Controls.Add(this.searchResultsStaffPanel1);
+            this.searchStaffPanel1.Controls.Add(this.selectEmployeeButton1);
+            this.searchStaffPanel1.Controls.Add(this.searchStaffResultListBox1);
             this.searchStaffPanel1.Controls.Add(this.searchStaffTextBox1);
             this.searchStaffPanel1.Location = new System.Drawing.Point(8, 32);
             this.searchStaffPanel1.Name = "searchStaffPanel1";
             this.searchStaffPanel1.Size = new System.Drawing.Size(451, 249);
             this.searchStaffPanel1.TabIndex = 20;
             // 
-            // searchResultsStaffPanel1
+            // selectEmployeeButton1
             // 
-            this.searchResultsStaffPanel1.Controls.Add(this.notFoundStaffLabel1);
-            this.searchResultsStaffPanel1.Location = new System.Drawing.Point(3, 34);
-            this.searchResultsStaffPanel1.Name = "searchResultsStaffPanel1";
-            this.searchResultsStaffPanel1.Size = new System.Drawing.Size(441, 213);
-            this.searchResultsStaffPanel1.TabIndex = 1;
+            this.selectEmployeeButton1.Location = new System.Drawing.Point(0, 217);
+            this.selectEmployeeButton1.Name = "selectEmployeeButton1";
+            this.selectEmployeeButton1.Size = new System.Drawing.Size(440, 23);
+            this.selectEmployeeButton1.TabIndex = 2;
+            this.selectEmployeeButton1.Text = "выбрать";
+            this.selectEmployeeButton1.UseVisualStyleBackColor = true;
+            this.selectEmployeeButton1.Click += new System.EventHandler(this.selectEmployeeButton1_Click);
             // 
-            // notFoundStaffLabel1
+            // searchStaffResultListBox1
             // 
-            this.notFoundStaffLabel1.AutoSize = true;
-            this.notFoundStaffLabel1.Location = new System.Drawing.Point(80, 7);
-            this.notFoundStaffLabel1.Name = "notFoundStaffLabel1";
-            this.notFoundStaffLabel1.Size = new System.Drawing.Size(263, 16);
-            this.notFoundStaffLabel1.TabIndex = 0;
-            this.notFoundStaffLabel1.Text = "По вашему запросу ничего не найдено";
+            this.searchStaffResultListBox1.DisplayMember = "name";
+            this.searchStaffResultListBox1.FormattingEnabled = true;
+            this.searchStaffResultListBox1.ItemHeight = 16;
+            this.searchStaffResultListBox1.Location = new System.Drawing.Point(4, 31);
+            this.searchStaffResultListBox1.Name = "searchStaffResultListBox1";
+            this.searchStaffResultListBox1.Size = new System.Drawing.Size(440, 180);
+            this.searchStaffResultListBox1.TabIndex = 1;
             // 
             // searchStaffTextBox1
             // 
@@ -770,7 +798,7 @@ namespace FitnessCenter
             this.succesLabel1.ForeColor = System.Drawing.SystemColors.Control;
             this.succesLabel1.Location = new System.Drawing.Point(47, 23);
             this.succesLabel1.Name = "succesLabel1";
-            this.succesLabel1.Size = new System.Drawing.Size(216, 88);
+            this.succesLabel1.Size = new System.Drawing.Size(176, 72);
             this.succesLabel1.TabIndex = 0;
             this.succesLabel1.Text = "Имя, успешно записана!\r\n31.04.24 18:00\r\nНаправление: силовая\r\n\r\n";
             // 
@@ -832,15 +860,15 @@ namespace FitnessCenter
             // 
             // individualClassesPanel2
             // 
+            this.individualClassesPanel2.Controls.Add(this.individualClassesListBox2);
             this.individualClassesPanel2.Controls.Add(this.employeeInfoButton1);
             this.individualClassesPanel2.Controls.Add(this.monthCalendar2);
             this.individualClassesPanel2.Controls.Add(this.invidualClassesLabel2);
-            this.individualClassesPanel2.Controls.Add(this.individualClassesPanel1);
             this.individualClassesPanel2.Controls.Add(this.invidualClassesLabel1);
             this.individualClassesPanel2.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.individualClassesPanel2.Location = new System.Drawing.Point(7, 317);
             this.individualClassesPanel2.Name = "individualClassesPanel2";
-            this.individualClassesPanel2.Size = new System.Drawing.Size(474, 329);
+            this.individualClassesPanel2.Size = new System.Drawing.Size(474, 296);
             this.individualClassesPanel2.TabIndex = 16;
             this.individualClassesPanel2.Visible = false;
             // 
@@ -867,30 +895,11 @@ namespace FitnessCenter
             // invidualClassesLabel2
             // 
             this.invidualClassesLabel2.AutoSize = true;
-            this.invidualClassesLabel2.Location = new System.Drawing.Point(309, 111);
+            this.invidualClassesLabel2.Location = new System.Drawing.Point(295, 111);
             this.invidualClassesLabel2.Name = "invidualClassesLabel2";
             this.invidualClassesLabel2.Size = new System.Drawing.Size(69, 16);
             this.invidualClassesLabel2.TabIndex = 14;
             this.invidualClassesLabel2.Text = "25.04.2024";
-            // 
-            // individualClassesPanel1
-            // 
-            this.individualClassesPanel1.AutoScroll = true;
-            this.individualClassesPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.individualClassesPanel1.Controls.Add(this.notFoundIndividualClassesLabel3);
-            this.individualClassesPanel1.Location = new System.Drawing.Point(227, 141);
-            this.individualClassesPanel1.Name = "individualClassesPanel1";
-            this.individualClassesPanel1.Size = new System.Drawing.Size(242, 177);
-            this.individualClassesPanel1.TabIndex = 15;
-            // 
-            // notFoundIndividualClassesLabel3
-            // 
-            this.notFoundIndividualClassesLabel3.AutoSize = true;
-            this.notFoundIndividualClassesLabel3.Location = new System.Drawing.Point(26, 4);
-            this.notFoundIndividualClassesLabel3.Name = "notFoundIndividualClassesLabel3";
-            this.notFoundIndividualClassesLabel3.Size = new System.Drawing.Size(179, 32);
-            this.notFoundIndividualClassesLabel3.TabIndex = 0;
-            this.notFoundIndividualClassesLabel3.Text = "На эту дату нет занятий у\r\nэтого тренера\r\n";
             // 
             // invidualClassesLabel1
             // 
@@ -900,7 +909,7 @@ namespace FitnessCenter
             this.invidualClassesLabel1.Location = new System.Drawing.Point(28, 20);
             this.invidualClassesLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.invidualClassesLabel1.Name = "invidualClassesLabel1";
-            this.invidualClassesLabel1.Size = new System.Drawing.Size(366, 41);
+            this.invidualClassesLabel1.Size = new System.Drawing.Size(298, 32);
             this.invidualClassesLabel1.TabIndex = 5;
             this.invidualClassesLabel1.Text = "Индивидуальные занятия";
             // 
@@ -916,32 +925,16 @@ namespace FitnessCenter
             this.analysisPanel4.Size = new System.Drawing.Size(474, 320);
             this.analysisPanel4.TabIndex = 16;
             // 
-            // analysisLabel1
+            // incomeLabel3
             // 
-            this.analysisLabel1.AutoSize = true;
-            this.analysisLabel1.Location = new System.Drawing.Point(8, 16);
-            this.analysisLabel1.Name = "analysisLabel1";
-            this.analysisLabel1.Size = new System.Drawing.Size(56, 16);
-            this.analysisLabel1.TabIndex = 0;
-            this.analysisLabel1.Text = "Анализ";
-            // 
-            // chart2
-            // 
-            chartArea4.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea4);
-            legend4.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend4.Name = "Legend1";
-            this.chart2.Legends.Add(legend4);
-            this.chart2.Location = new System.Drawing.Point(19, 75);
-            this.chart2.Name = "chart2";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedBar;
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart2.Series.Add(series4);
-            this.chart2.Size = new System.Drawing.Size(414, 230);
-            this.chart2.TabIndex = 1;
-            this.chart2.Text = "chart2";
+            this.incomeLabel3.AutoSize = true;
+            this.incomeLabel3.BackColor = System.Drawing.SystemColors.Control;
+            this.incomeLabel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.incomeLabel3.Location = new System.Drawing.Point(229, 44);
+            this.incomeLabel3.Name = "incomeLabel3";
+            this.incomeLabel3.Size = new System.Drawing.Size(108, 18);
+            this.incomeLabel3.TabIndex = 3;
+            this.incomeLabel3.Text = "Прибыль: 10000";
             // 
             // clientCountLabel2
             // 
@@ -954,16 +947,42 @@ namespace FitnessCenter
             this.clientCountLabel2.TabIndex = 2;
             this.clientCountLabel2.Text = "Количество клиентов: 100000";
             // 
-            // incomeLabel3
+            // chart2
             // 
-            this.incomeLabel3.AutoSize = true;
-            this.incomeLabel3.BackColor = System.Drawing.SystemColors.Control;
-            this.incomeLabel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.incomeLabel3.Location = new System.Drawing.Point(229, 44);
-            this.incomeLabel3.Name = "incomeLabel3";
-            this.incomeLabel3.Size = new System.Drawing.Size(108, 18);
-            this.incomeLabel3.TabIndex = 3;
-            this.incomeLabel3.Text = "Прибыль: 10000";
+            chartArea14.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea14);
+            legend14.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend14.Name = "Legend1";
+            this.chart2.Legends.Add(legend14);
+            this.chart2.Location = new System.Drawing.Point(19, 75);
+            this.chart2.Name = "chart2";
+            series14.ChartArea = "ChartArea1";
+            series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedBar;
+            series14.Legend = "Legend1";
+            series14.Name = "Series1";
+            this.chart2.Series.Add(series14);
+            this.chart2.Size = new System.Drawing.Size(414, 230);
+            this.chart2.TabIndex = 1;
+            this.chart2.Text = "chart2";
+            // 
+            // analysisLabel1
+            // 
+            this.analysisLabel1.AutoSize = true;
+            this.analysisLabel1.Location = new System.Drawing.Point(8, 16);
+            this.analysisLabel1.Name = "analysisLabel1";
+            this.analysisLabel1.Size = new System.Drawing.Size(56, 16);
+            this.analysisLabel1.TabIndex = 0;
+            this.analysisLabel1.Text = "Анализ";
+            // 
+            // individualClassesListBox2
+            // 
+            this.individualClassesListBox2.DisplayMember = "name";
+            this.individualClassesListBox2.FormattingEnabled = true;
+            this.individualClassesListBox2.ItemHeight = 16;
+            this.individualClassesListBox2.Location = new System.Drawing.Point(199, 139);
+            this.individualClassesListBox2.Name = "individualClassesListBox2";
+            this.individualClassesListBox2.Size = new System.Drawing.Size(260, 132);
+            this.individualClassesListBox2.TabIndex = 17;
             // 
             // MainForm
             // 
@@ -1004,8 +1023,6 @@ namespace FitnessCenter
             this.staffPanel3.PerformLayout();
             this.searchStaffPanel1.ResumeLayout(false);
             this.searchStaffPanel1.PerformLayout();
-            this.searchResultsStaffPanel1.ResumeLayout(false);
-            this.searchResultsStaffPanel1.PerformLayout();
             this.abonementsPanel4.ResumeLayout(false);
             this.abonementsPanel4.PerformLayout();
             this.choosedPlanPanel5.ResumeLayout(false);
@@ -1019,8 +1036,6 @@ namespace FitnessCenter
             this.selectClassTypePanel7.PerformLayout();
             this.individualClassesPanel2.ResumeLayout(false);
             this.individualClassesPanel2.PerformLayout();
-            this.individualClassesPanel1.ResumeLayout(false);
-            this.individualClassesPanel1.PerformLayout();
             this.analysisPanel4.ResumeLayout(false);
             this.analysisPanel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
@@ -1038,7 +1053,6 @@ namespace FitnessCenter
         private Button analysButton4;
         private Button staffButton3;
         private Button clientsButton2;
-        private Panel availableSchedulePanel1;
         private Label dateScheduleLabel2;
         private Panel schedulePanel1;
         private Panel clientsPanel2;
@@ -1065,8 +1079,6 @@ namespace FitnessCenter
         private Label notFoundClientsLabel1;
         private Label clientNameLabel1;
         private Panel staffPanel3;
-        private Panel searchResultsStaffPanel1;
-        private Label notFoundStaffLabel1;
         private TextBox searchStaffTextBox1;
         private Label staffLabel1;
         private DateTimePicker dateTimePicker1;
@@ -1100,15 +1112,19 @@ namespace FitnessCenter
         private Panel individualClassesPanel2;
         private MonthCalendar monthCalendar2;
         private Label invidualClassesLabel2;
-        private Panel individualClassesPanel1;
         private Label invidualClassesLabel1;
         private Button employeeInfoButton1;
-        private Label notFoundIndividualClassesLabel3;
         private Panel searchStaffPanel1;
         private Panel analysisPanel4;
         private Label analysisLabel1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private Label incomeLabel3;
         private Label clientCountLabel2;
+        private ListBox timesListBox2;
+        private ListBox typesOfClassesListBox1;
+        private Button signUpToGroupClassButton1;
+        private ListBox searchStaffResultListBox1;
+        private Button selectEmployeeButton1;
+        private ListBox individualClassesListBox2;
     }
 }

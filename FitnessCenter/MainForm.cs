@@ -18,64 +18,100 @@ namespace FitnessCenter
         private Class _choosedClass = null;
         private Employee _choosedEmployee = null;
         private int _choosedPlan;
+
+        /// Общие методы
         public MainForm()
         {
             InitializeComponent();
 
             manager = new Manager();
-
             _clients = manager.GetClients();
             _classes = manager.GetClasses();
             _employees = manager.GetEmployees();
 
             ShowGroupClasses();
+            searchStaffResultListBox1.DataSource = _employees;
+        }
+
+        private void showOnlyMainPanel(string target)
+        {
+            foreach (Control control in this.Controls)
+            {
+                if ((control is Panel) && (control.Name != target) && (control.Name != "splitter")) control.Visible = false;
+                else control.Visible = true;
+            }
+        }
+
+        // TODO
+        private void showOnlyClientsPanel(string target) { }
+
+        private void scheduleButton1_Click(object sender, EventArgs e)
+        {
+            _choosedClient = null;
+            showOnlyMainPanel("schedulePanel1");
+            searchStaffPanel1.Visible = true;
+        }
+
+        private void clientsButton2_Click(object sender, EventArgs e)
+        {
+            ShowClientsContains();
+            showOnlyMainPanel("clientsPanel2");
+        }
+
+        private void staffButton3_Click(object sender, EventArgs e)
+        {
+            searchStaffResultListBox1.DataSource = _employees;
+            showOnlyMainPanel("staffPanel3");
+        }
+
+        private void analysButton4_Click (object sender, EventArgs e)
+        {
+            showOnlyMainPanel("analysisPanel4");
+            setUpAnalysis();
+        }
+
+        /// Групповые занятия
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            dateScheduleLabel2.Text = monthCalendar1.SelectionStart.ToString("dd.MM.yyyy");
+            timesListBox2.DataSource = null;
+            ShowGroupClasses();            
         }
 
         private void ShowGroupClasses(Client client = null)
         {
-            availableSchedulePanel1.Controls.Clear();
-            int topMargin = 0;
+            // Получаем все классы, учитывая параметр client
+            var allClasses = client != null ? _classes.Except(client.classes) : _classes;
 
-            foreach (var group in _classes.GroupBy(c => c.name))
-            {
-                Class firstClass = group.First();
-                DateTime classDate = firstClass.dateTime.Date;
+            // Группируем классы по имени и выбираем первый класс из каждой группы
+            var groupedClasses = allClasses.Where(@class => @class.isGroup && @class.dateTime.Date == monthCalendar1.SelectionStart)
+                                           .GroupBy(@class => @class.name)
+                                           .Select(group => group.First())
+                                           .ToList();
 
-                if (classDate == monthCalendar1.SelectionStart && firstClass.isGroup)
-                {
-                    // Создаем кнопку для имени класса
-                    Button btnName = new Button();
-                    btnName.Text = group.Key;
-                    btnName.Size = new Size(100, 22);
-                    btnName.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
-                    availableSchedulePanel1.Controls.Add(btnName);
-
-                    int leftMargin = btnName.Width + 5;
-
-                    // Ищем все уникальные времена для данной группы классов
-                    foreach (Class @class in group)
-                    {
-                        Button btnTime = new Button();
-                        btnTime.Text = @class.dateTime.ToString("HH:mm"); // Используем дату класса для вывода времени
-                        btnTime.Size = new Size(50, 22);
-                        btnTime.Click += (sender, e) => showUpSuccesClassRegistration(@class);
-                        btnTime.Location = new Point(leftMargin, topMargin);
-                        leftMargin += btnTime.Width + 5;
-                        availableSchedulePanel1.Controls.Add(btnTime);
-                        if ((@class.dateTime.Date < DateTime.Now) || (!(client is null) && (client.classes.Contains(@class))))
-                        {
-                            btnTime.Enabled = false;
-                        }
-                    }
-
-                    topMargin += btnName.Height + 5;
-                }
-                dateScheduleLabel2.Text = monthCalendar1.SelectionStart.ToString("dd.MM.yyyy");
-            }
+            // Отображаем имена групп в typesOfClassesListBox1
+            typesOfClassesListBox1.DataSource = groupedClasses;
         }
 
-        private void showUpSuccesClassRegistration(Class @class)
+        private void typesOfClassesListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Получаем выбранную группу классов
+            Class selectedClass = (Class)typesOfClassesListBox1.SelectedItem;
+
+            // Фильтруем классы клиента, если он был передан
+            var clientClasses = _choosedClient != null ? _choosedClient.classes.Where(c => c.name == selectedClass.name) : Enumerable.Empty<Class>();
+
+            // Отображаем только те времена, которые не входят в классы клиента
+            var times = _classes.Where(@class => @class.name == selectedClass.name && !clientClasses.Contains(@class))
+                                .ToList();
+
+            // Отображаем времена для выбранной группы в timesListBox2
+            timesListBox2.DataSource = times;
+        }
+
+        private void signUpToGroupClassButton1_Click(object sender, EventArgs e)
+        {
+            Class @class = (Class) timesListBox2.SelectedItem;
             if (_choosedClient is null)
             {
                 schedulePanel1.Visible = false;
@@ -91,9 +127,11 @@ namespace FitnessCenter
                 succesLabel1.Text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy HH:mm")}\nнаправление:{@class.name}";
                 _choosedClient = null;
                 _choosedClass = null;
-            }            
+            }
         }
 
+
+        /// Клиенты
         private bool ShowClientsContains(string text = "")
         {
             // Очищаем все предыдущие кнопки
@@ -145,7 +183,7 @@ namespace FitnessCenter
                 client.appendClass(_choosedClass);
                 _choosedClass.appendClient(client);
 
-                string variousText = _choosedEmployee is null ? $"направление :{_choosedClass.name}" : $"тренер {_choosedEmployee.Name}";
+                string variousText = _choosedEmployee is null ? $"направление :{_choosedClass.name}" : $"тренер {_choosedEmployee.name}";
                 succesLabel1.Text = $"{client.full_name}, успешно записан(а)!\n{_choosedClass.dateTime.ToString("dd.MM.yy HH:mm")}\n" + variousText;
                 _choosedClass = null;
                 _choosedClient = null;
@@ -165,179 +203,6 @@ namespace FitnessCenter
                     return;
                 }
             }
-        }
-
-        private void showOnlyMainPanel(string target)
-        {
-            foreach (Control control in this.Controls)
-            {
-                if ((control is Panel) && (control.Name != target) && (control.Name != "splitter")) control.Visible = false;
-                else control.Visible = true;
-            }
-        }
-
-        private void showOnlyClientsPanel(string target)
-        {
-
-        }
-
-        private void setUpStaffPanel(string text = "")
-        {
-            var buttons = searchResultsStaffPanel1.Controls.OfType<Button>().ToArray();
-            foreach (var button in buttons) { searchResultsStaffPanel1.Controls.Remove(button); }
-
-            int topMargin = 0; // отступ сверху для первой кнопки
-            bool anyItemContains = false;
-
-            foreach (Employee employee in _employees)
-            {
-                if ((employee.Name.ToLower().Contains(text.ToLower())) || (employee.degree.ToLower().Contains(text.ToLower())))
-                {
-                    Button btnClass = new Button();
-                    btnClass.Text = $"{employee.Name}\n{employee.degree}";
-                    btnClass.Size = new Size(330, 35);
-                    btnClass.Click += (sender, e) => employeeButtonClick(employee);
-                    btnClass.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
-                    Button btnDeleteClass = new Button();
-                    btnDeleteClass.Text = "Удалить";
-                    btnDeleteClass.Size = new Size(94, 22);
-                    /*btnDeleteClass.Click += (sender, e) => deleteClass(@class);*/
-                    btnDeleteClass.Location = new Point(btnClass.Width + 11, topMargin); // каждая кнопка размещается на новой строке
-                    searchResultsStaffPanel1.Controls.Add(btnClass);
-                    searchResultsStaffPanel1.Controls.Add(btnDeleteClass);
-
-                    topMargin += btnClass.Height + 5;
-                    anyItemContains = true;
-                }                
-            }
-            if (!anyItemContains) notFoundStaffLabel1.Visible = true;
-            else notFoundStaffLabel1.Visible = false;
-        }
-
-        private void showIndividualClasses()
-        {
-            var buttons = individualClassesPanel1.Controls.OfType<Button>().ToArray();
-            foreach (var button in buttons) { individualClassesPanel1.Controls.Remove(button); }
-
-            invidualClassesLabel2.Text = monthCalendar2.SelectionStart.ToString("dd.MM.yy");
-
-            int topMargin = 0; // отступ сверху для первой кнопки
-            bool anyItemContains = false;
-
-            foreach (Class @class in _choosedEmployee.classes)
-            {
-                if (@class.dateTime.Date == monthCalendar2.SelectionStart)
-                {
-                    Button btnClass = new Button();
-                    btnClass.Text = $"{@class.dateTime.ToString("HH:mm")}";
-                    btnClass.Size = new Size(100, 22);
-                    btnClass.Click += (sender, e) => individualClassButtonClick(@class);
-                    btnClass.Location = new Point((individualClassesPanel1.Width-btnClass.Width)/2, topMargin); // каждая кнопка размещается на новой строке
-                    /*Button btnDeleteClass = new Button();
-                    btnDeleteClass.Text = "Удалить";
-                    btnDeleteClass.Size = new Size(94, 22);
-                    *//*btnDeleteClass.Click += (sender, e) => deleteClass(@class);*//*
-                    btnDeleteClass.Location = new Point(btnClass.Width + 11, topMargin); // каждая кнопка размещается на новой строке*/
-                    individualClassesPanel1.Controls.Add(btnClass);
-                    /*searchResultsStaffPanel1.Controls.Add(btnDeleteClass);*/
-
-                    topMargin += btnClass.Height + 5;
-                    anyItemContains = true;
-                }
-            }
-            if (!anyItemContains) notFoundIndividualClassesLabel3.Visible = true;
-            else notFoundIndividualClassesLabel3.Visible = false;
-        }
-        private void setUpIndividualClasses()
-        {
-            employeeInfoButton1.Text = $"{_choosedEmployee.Name}\n{_choosedEmployee.degree}";
-            showIndividualClasses();
-        }
-
-        private void individualClassButtonClick(Class @class)
-        {
-            if (_choosedClient is null)
-            {
-                _choosedClass = @class;
-                showOnlyMainPanel("clientsPanel2");
-            }
-            else
-            {
-                succesRegistrationSchedulePanel2.Visible = true;
-                _choosedClient.appendClass(@class);
-                @class.appendClient(_choosedClient);
-
-                succesLabel1.Text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy HH:mm")}\n" +
-                    $"тренер {_choosedEmployee.Name}";
-                _choosedClass = null;
-                _choosedClient = null;
-                _choosedEmployee = null;
-            }
-        }
-
-        private void employeeButtonClick(Employee employee)
-        {
-            _choosedEmployee = employee;
-            searchStaffPanel1.Visible = false;
-            individualClassesPanel2.Visible = true;
-            setUpIndividualClasses();
-        }
-
-        private void scheduleButton1_Click(object sender, EventArgs e)
-        {
-            _choosedClient = null;
-            showOnlyMainPanel("schedulePanel1");
-            searchStaffPanel1.Visible = true;
-        }
-
-        private void clientsButton2_Click(object sender, EventArgs e)
-        {
-            ShowClientsContains();
-            showOnlyMainPanel("clientsPanel2");
-        }
-
-        private void staffButton3_Click(object sender, EventArgs e)
-        {
-            setUpStaffPanel();
-            showOnlyMainPanel("staffPanel3");
-        }
-
-        // TODO
-        private void analysButton4_Click(object sender, EventArgs e)
-        {
-            showOnlyMainPanel("analysisPanel4");
-            setUpAnalysis();
-
-        }
-
-        private void setUpAnalysis()
-        {
-            chart2.Series.Clear();
-
-            clientCountLabel2.Text = $"Количество клиентов: {manager.NewClientsInMonth(DateTime.Now)}";
-            incomeLabel3.Text = $"Прибыль в сотнях тысяч рублей: {manager.GetIncomeInThousand(DateTime.Now)}";
-
-            Series newClientsPerMonth = new Series();
-            newClientsPerMonth.Name = "Новые клиенты";
-            
-            foreach (var pair in manager.NewClientsPerMonth()) { newClientsPerMonth.Points.AddXY(pair.Key, pair.Value); }
-
-            Series averageVisitsPerMonth = new Series();
-            
-            averageVisitsPerMonth.Name = "Среднее количество посещений";
-            foreach (var pair in manager.AverageVisitsPerMonth()) { averageVisitsPerMonth.Points.AddXY(pair.Key, pair.Value); }
-
-            Series incomePerMonth = new Series();
- 
-            incomePerMonth.Name = "Прибыль в сотнях тысяч рублей";
-            foreach (var pair in manager.GetIncomeInThousand())
-            {    
-                incomePerMonth.Points.AddXY(pair.Key, pair.Value);
-            }
-
-        chart2.Series.Add(newClientsPerMonth);
-            chart2.Series.Add(averageVisitsPerMonth);
-            chart2.Series.Add(incomePerMonth);
         }
 
         private void searchClientsTextBox_TextChanged(object sender, EventArgs e)
@@ -441,11 +306,6 @@ namespace FitnessCenter
             abonementsPanel4.Visible = true;
         }
 
-        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
-        {
-            ShowGroupClasses(_choosedClient);
-        }
-
         private void visitHistoryButton1_Click(object sender, EventArgs e)
         {
             clientInfoPanel3.Visible = false;
@@ -501,11 +361,6 @@ namespace FitnessCenter
             selectClassTypePanel7.Visible = true;
         }
 
-        private void backFromSuccesPanelButton1_Click(object sender, EventArgs e)
-        {
-            succesRegistrationSchedulePanel2.Visible = false;
-        }
-
         private void selectGroupClassButton1_Click(object sender, EventArgs e)
         {
             clientsPanel2.Visible = false;
@@ -516,14 +371,84 @@ namespace FitnessCenter
             showClientsPanel1.Visible = true;
         }
 
-        private void searchStaffTextBox1_TextChanged(object sender, EventArgs e)
+        private void selectPersonalClassButton2_Click(object sender, EventArgs e)
         {
-            setUpStaffPanel(searchStaffTextBox1.Text);
+            showOnlyMainPanel("staffPanel3");
+            selectClassTypePanel7.Visible = false;
+            searchStaffResultListBox1.DataSource = _employees;
         }
 
-        private void monthCalendar2_DateChanged(object sender, DateRangeEventArgs e)
+
+        /// Индивидуальные занятия
+        /*private void showIndividualClasses()
         {
+            var buttons = individualClassesPanel1.Controls.OfType<Button>().ToArray();
+            foreach (var button in buttons) { individualClassesPanel1.Controls.Remove(button); }
+
+            invidualClassesLabel2.Text = monthCalendar2.SelectionStart.ToString("dd.MM.yy");
+
+            int topMargin = 0; // отступ сверху для первой кнопки
+            bool anyItemContains = false;
+
+            foreach (Class @class in _choosedEmployee.classes)
+            {
+                if (@class.dateTime.Date == monthCalendar2.SelectionStart)
+                {
+                    Button btnClass = new Button();
+                    btnClass.Text = $"{@class.dateTime.ToString("HH:mm")}";
+                    btnClass.Size = new Size(100, 22);
+                    btnClass.Click += (sender, e) => individualClassButtonClick(@class);
+                    btnClass.Location = new Point((individualClassesPanel1.Width-btnClass.Width)/2, topMargin); // каждая кнопка размещается на новой строке
+                    *//*Button btnDeleteClass = new Button();
+                    btnDeleteClass.Text = "Удалить";
+                    btnDeleteClass.Size = new Size(94, 22);
+                    *//*btnDeleteClass.Click += (sender, e) => deleteClass(@class);*//*
+                    btnDeleteClass.Location = new Point(btnClass.Width + 11, topMargin); // каждая кнопка размещается на новой строке*//*
+                    individualClassesPanel1.Controls.Add(btnClass);
+                    *//*searchResultsStaffPanel1.Controls.Add(btnDeleteClass);*//*
+
+                    topMargin += btnClass.Height + 5;
+                    anyItemContains = true;
+                }
+            }
+            if (!anyItemContains) notFoundIndividualClassesLabel3.Visible = true;
+            else notFoundIndividualClassesLabel3.Visible = false;
+        }*/
+        private void setUpIndividualClasses()
+        {
+            invidualClassesLabel2.Text = monthCalendar2.SelectionStart.ToString("dd.MM.yy");
+            employeeInfoButton1.Text = $"{_choosedEmployee.name}\n{_choosedEmployee.degree}";
+            individualClassesListBox2.DataSource = _choosedEmployee.classes.Where(@class => @class.dateTime.Date == monthCalendar2.SelectionStart).ToList();
+        }
+
+        private void selectEmployeeButton1_Click(object sender, EventArgs e)
+        {
+            _choosedEmployee = (Employee)searchStaffResultListBox1.SelectedItem;
+            searchStaffPanel1.Visible = false;
+            individualClassesPanel2.Visible = true;
             setUpIndividualClasses();
+        }
+
+
+        private void individualClassButtonClick(Class @class)
+        {
+            if (_choosedClient is null)
+            {
+                _choosedClass = @class;
+                showOnlyMainPanel("clientsPanel2");
+            }
+            else
+            {
+                succesRegistrationSchedulePanel2.Visible = true;
+                _choosedClient.appendClass(@class);
+                @class.appendClient(_choosedClient);
+
+                succesLabel1.Text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy HH:mm")}\n" +
+                    $"тренер {_choosedEmployee.name}";
+                _choosedClass = null;
+                _choosedClient = null;
+                _choosedEmployee = null;
+            }
         }
 
         private void employeeInfoButton1_Click(object sender, EventArgs e)
@@ -533,11 +458,52 @@ namespace FitnessCenter
             searchStaffPanel1.Visible = true;
         }
 
-        private void selectPersonalClassButton2_Click(object sender, EventArgs e)
+        private void backFromSuccesPanelButton1_Click(object sender, EventArgs e)
         {
-            showOnlyMainPanel("staffPanel3");
-            selectClassTypePanel7.Visible = false;
-            setUpStaffPanel();
+            succesRegistrationSchedulePanel2.Visible = false;
+        }
+
+        private void searchStaffTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            string query = searchStaffTextBox1.Text;
+            searchStaffResultListBox1.DataSource = query.Length > 0 ? _employees.Where(employee => employee.name.ToLower().Contains(query.ToLower())).ToList() : _employees;
+        }
+
+        private void monthCalendar2_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            setUpIndividualClasses();
+        }
+
+        /// Анализ
+
+        private void setUpAnalysis()
+        {
+            chart2.Series.Clear();
+
+            clientCountLabel2.Text = $"Количество клиентов: {manager.NewClientsInMonth(DateTime.Now)}";
+            incomeLabel3.Text = $"Прибыль в сотнях тысяч рублей: {manager.GetIncomeInThousand(DateTime.Now)}";
+
+            Series newClientsPerMonth = new Series();
+            newClientsPerMonth.Name = "Новые клиенты";
+
+            foreach (var pair in manager.NewClientsPerMonth()) { newClientsPerMonth.Points.AddXY(pair.Key, pair.Value); }
+
+            Series averageVisitsPerMonth = new Series();
+
+            averageVisitsPerMonth.Name = "Среднее количество посещений";
+            foreach (var pair in manager.AverageVisitsPerMonth()) { averageVisitsPerMonth.Points.AddXY(pair.Key, pair.Value); }
+
+            Series incomePerMonth = new Series();
+
+            incomePerMonth.Name = "Прибыль в сотнях тысяч рублей";
+            foreach (var pair in manager.GetIncomeInThousand())
+            {
+                incomePerMonth.Points.AddXY(pair.Key, pair.Value);
+            }
+
+            chart2.Series.Add(newClientsPerMonth);
+            chart2.Series.Add(averageVisitsPerMonth);
+            chart2.Series.Add(incomePerMonth);
         }
     }
 }
