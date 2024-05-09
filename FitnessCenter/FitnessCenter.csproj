@@ -60,6 +60,24 @@
     </Compile>
     <Compile Include="Manager.cs" />
     <Compile Include="Class.cs" />
+    <Compile Include="SelectAbonement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectAbonement.Designer.cs">
+      <DependentUpon>SelectAbonement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectClassTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectClassTypeForm.Designer.cs">
+      <DependentUpon>SelectClassTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SuccesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SuccesForm.Designer.cs">
+      <DependentUpon>SuccesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WelcomeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +99,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SelectAbonement.resx">
+      <DependentUpon>SelectAbonement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectClassTypeForm.resx">
+      <DependentUpon>SelectClassTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SuccesForm.resx">
+      <DependentUpon>SuccesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WelcomeForm.resx">
       <DependentUpon>WelcomeForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FitnessCenter.Resources
 {
@@ -14,6 +11,8 @@ namespace FitnessCenter.Resources
         public DateTime dateTime { get; set; }
 
         public bool isGroup { get; set; }
+
+        public string textForVisits { get { return this.dateTime.ToString("dd.MM.yyyy HH:mm") + $" направление: {this.name.ToLower()}"; } }
 
         public Class() { }
 

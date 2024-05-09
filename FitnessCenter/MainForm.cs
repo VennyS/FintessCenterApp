@@ -54,7 +54,8 @@ namespace FitnessCenter
 
         private void clientsButton2_Click(object sender, EventArgs e)
         {
-            ShowClientsContains();
+            searchResultsClientsListBox1.DataSource = _clients;
+            searchResultsClientsListBox1.DisplayMember = "full_name";
             showOnlyMainPanel("clientsPanel2");
         }
 
@@ -107,24 +108,28 @@ namespace FitnessCenter
 
             // Отображаем времена для выбранной группы в timesListBox2
             timesListBox2.DataSource = times;
+            timesListBox2.DisplayMember = "dateTime";
         }
 
         private void signUpToGroupClassButton1_Click(object sender, EventArgs e)
         {
             Class @class = (Class) timesListBox2.SelectedItem;
+            if (@class is null) return;
+
             if (_choosedClient is null)
             {
                 schedulePanel1.Visible = false;
                 clientsPanel2.Visible = true;
-                ShowClientsContains();
+                searchResultsClientsListBox1.DataSource = _clients;
                 _choosedClass = @class;
             }
             else
             {
-                succesRegistrationSchedulePanel2.Visible = true;
                 _choosedClient.appendClass(@class);
                 @class.appendClient(_choosedClient);
-                succesLabel1.Text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy HH:mm")}\nнаправление:{@class.name}";
+                string text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy HH:mm")}\nнаправление:{@class.name}";
+                SuccesForm succesForm = new SuccesForm(text);
+                succesForm.ShowDialog();
                 _choosedClient = null;
                 _choosedClass = null;
             }
@@ -132,82 +137,45 @@ namespace FitnessCenter
 
 
         /// Клиенты
-        private bool ShowClientsContains(string text = "")
+        private void chooseClientButton2_Click(object sender, EventArgs e)
         {
-            // Очищаем все предыдущие кнопки
-            var buttons = searchResultsClientsPanel1.Controls.OfType<Button>().ToArray();
-            foreach (Button button in buttons) searchResultsClientsPanel1.Controls.Remove(button);
+            Client choosedClient = (Client)searchResultsClientsListBox1.SelectedItem;
+            if (choosedClient is null) return;
 
-            bool anyItemContains = false;
-            int topMargin = 0; // отступ сверху для первой кнопки
-
-            foreach (Client client in _clients)
-            {
-                if (client.full_name.ToLower().Contains(text.ToLower()))
-                {
-                    Button btnClient = new Button();
-                    btnClient.Text = client.full_name;
-                    btnClient.Size = new Size(330, 22);
-                    btnClient.Click += (sender, e) => ClientButton_Click(client);
-                    btnClient.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
-                    Button deleteClient = new Button();
-                    deleteClient.Text = "Удалить";
-                    deleteClient.Size = new Size(94, 22);
-                    deleteClient.Click += (sender, e) => DeleteClientButton_Click(client, text);
-                    deleteClient.Location = new Point(btnClient.Width+11, topMargin); // каждая кнопка размещается на новой строке
-                    searchResultsClientsPanel1.Controls.Add(btnClient);
-                    searchResultsClientsPanel1.Controls.Add(deleteClient);
-
-                    // Увеличиваем отступ сверху для следующей кнопки
-                    topMargin += btnClient.Height + 5; // добавляем высоту кнопки и небольшой отступ
-                    anyItemContains = true;
-                }               
-            }
-
-            if (!anyItemContains) notFoundClientsLabel1.Visible = true;
-            else notFoundClientsLabel1.Visible = false;
-            return anyItemContains;
-        }
-
-        private void ClientButton_Click(Client client)
-        {
             if (_choosedClass is null && _choosedEmployee is null)
             {
                 showClientsPanel1.Visible = false;
-                setUpInfoPanel(client);
+                setUpInfoPanel(choosedClient);
                 clientInfoPanel3.Visible = true;
             }
             else
             {
-                succesRegistrationSchedulePanel2.Visible = true;
-                client.appendClass(_choosedClass);
-                _choosedClass.appendClient(client);
-
+                choosedClient.appendClass(_choosedClass);
+                _choosedClass.appendClient(choosedClient);
                 string variousText = _choosedEmployee is null ? $"направление :{_choosedClass.name}" : $"тренер {_choosedEmployee.name}";
-                succesLabel1.Text = $"{client.full_name}, успешно записан(а)!\n{_choosedClass.dateTime.ToString("dd.MM.yy HH:mm")}\n" + variousText;
+                string text = $"{choosedClient.full_name}, успешно записан(а)!\n{_choosedClass.dateTime.ToString("dd.MM.yy HH:mm")}\n" + variousText;
+                SuccesForm succesForm = new SuccesForm(text);
+                succesForm.ShowDialog(this);
                 _choosedClass = null;
                 _choosedClient = null;
                 _choosedEmployee = null;
             }
         }
 
-        private void DeleteClientButton_Click(Client choosedClient, string text)
+        private void deleteClientButton3_Click(object sender, EventArgs e)
         {
-            
-            foreach (Client client in _clients)
-            {
-                if (choosedClient == client)
-                {
-                    _clients.Remove(client);
-                    ShowClientsContains(text);
-                    return;
-                }
-            }
+            Client choosedClient = (Client)searchResultsClientsListBox1.SelectedItem;
+            if (choosedClient is null) return;
+
+            _clients.Remove(choosedClient);
+
+            if (searchClientsTextBox.Text.Length == 0) searchResultsClientsListBox1.DataSource = _clients;
+            else searchResultsClientsListBox1.DataSource = _clients.Where(client => client.full_name.Contains(searchClientsTextBox.Text)).ToList();
         }
 
         private void searchClientsTextBox_TextChanged(object sender, EventArgs e)
         {
-            ShowClientsContains(searchClientsTextBox.Text);
+            searchResultsClientsListBox1.DataSource = _clients.Where(client => client.full_name.Contains(searchClientsTextBox.Text)).ToList();
         }
 
         private void createClientsButton_Click(object sender, EventArgs e)
@@ -232,7 +200,10 @@ namespace FitnessCenter
             newClientPanel2.Visible = false;
 
             _clients.Add(new Client(fullNameTextBox1.Text, dateTimePicker1.Value, int.Parse(weigthTextBox3.Text), int.Parse(heigthTextBox4.Text)));
-            ShowClientsContains();
+
+            if (searchClientsTextBox.Text.Length == 0) searchResultsClientsListBox1.DataSource = _clients;
+            else searchResultsClientsListBox1.DataSource = _clients.Where(client => client.full_name.Contains(searchClientsTextBox.Text)).ToList();
+
         }
 
         private void setUpInfoPanel(Client client)
@@ -261,49 +232,14 @@ namespace FitnessCenter
 
         private void addClasseButton3_Click(object sender, EventArgs e)
         {
-            abonementsPanel4.Visible = true;
-        }
+            SelectAbonement selectAbonement = new SelectAbonement();
+            selectAbonement.ShowDialog();
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            abonementsPanel4.Visible = false;
-        }
-
-        private void Variant1AbonementButton1_Click(object sender, EventArgs e)
-        {
-            _choosedPlan = 8;
-            abonementsPanel4.Visible = false;
-            choosedPlanPanel5.Visible = true;
-            choosedPlanButton1.Text = Variant1AbonementButton1.Text;
-        }
-
-        private void Variant2AbonementButton2_Click(object sender, EventArgs e)
-        {
-            _choosedPlan = 12;
-            abonementsPanel4.Visible = false;
-            choosedPlanPanel5.Visible = true;
-            choosedPlanButton1.Text = Variant2AbonementButton2.Text;
-        }
-
-        private void Variant3AbonementButton3_Click(object sender, EventArgs e)
-        {
-            _choosedPlan = 16;
-            abonementsPanel4.Visible = false;
-            choosedPlanPanel5.Visible = true;
-            choosedPlanButton1.Text = Variant3AbonementButton3.Text;
-        }
-
-        private void acceptPlanButton3_Click(object sender, EventArgs e)
-        {
-            _choosedClient.addAbonement(_choosedPlan);
-            choosedPlanPanel5.Visible = false;
-            setUpInfoPanel(_choosedClient);
-        }
-
-        private void backFromChosedPlanButton3_Click(object sender, EventArgs e)
-        {
-            choosedPlanPanel5.Visible = false;
-            abonementsPanel4.Visible = true;
+            if (selectAbonement.isPlanChoosed)
+            {
+                _choosedClient.addAbonement(selectAbonement.selectedPlan);
+                setUpInfoPanel(_choosedClient);
+            }
         }
 
         private void visitHistoryButton1_Click(object sender, EventArgs e)
@@ -315,39 +251,9 @@ namespace FitnessCenter
 
         private void setUpVisitHistoryPanel()
         {
-            var buttons = visitsShowPanel1.Controls.OfType<Button>().ToArray();
-            foreach (var button in buttons) { visitsShowPanel1.Controls.Remove(button); }
-
             clientNameLabel2.Text = _choosedClient.full_name;
-            int topMargin = 0; // отступ сверху для первой кнопки
-            bool anyItemContains = false;
-
-            foreach (Class @class in _choosedClient.classes)
-            {
-                Button btnClass = new Button();
-                btnClass.Text = @class.dateTime.ToString("dd.MM.yyyy HH:mm") + $" направление: {@class.name.ToLower()}";
-                btnClass.Size = new Size(330, 22);
-                /*btnClass.Click += (sender, e) => ClientButton_Click(client);*/
-                btnClass.Location = new Point(0, topMargin); // каждая кнопка размещается на новой строке
-                Button btnDeleteClass = new Button();
-                btnDeleteClass.Text = "Удалить";
-                btnDeleteClass.Size = new Size(94, 22);
-                btnDeleteClass.Click += (sender, e) => deleteClass(@class);
-                btnDeleteClass.Location = new Point(btnClass.Width + 11, topMargin); // каждая кнопка размещается на новой строке
-                visitsShowPanel1.Controls.Add(btnClass);
-                visitsShowPanel1.Controls.Add(btnDeleteClass);
-
-                topMargin += btnClass.Height + 5;
-                anyItemContains = true;
-            }
-            if (!anyItemContains) notFoundVisitsLabel1.Visible = true;
-            else notFoundVisitsLabel1.Visible = false;
-        }
-
-        private void deleteClass(Class @class)
-        {
-            _choosedClient.removeClass(@class);
-            setUpVisitHistoryPanel();
+            visitsShowListBox1.DataSource = _choosedClient.classes;
+            visitsShowListBox1.DisplayMember = "textForVisits";
         }
 
         private void backFromVisitHistoryButton1_Click(object sender, EventArgs e)
@@ -358,62 +264,23 @@ namespace FitnessCenter
 
         private void signUpButton2_Click(object sender, EventArgs e)
         {
-            selectClassTypePanel7.Visible = true;
-        }
-
-        private void selectGroupClassButton1_Click(object sender, EventArgs e)
-        {
-            clientsPanel2.Visible = false;
-            selectClassTypePanel7.Visible = false;
-            schedulePanel1.Visible = true;
-            ShowGroupClasses(_choosedClient);
-            clientInfoPanel3.Visible = false;
-            showClientsPanel1.Visible = true;
-        }
-
-        private void selectPersonalClassButton2_Click(object sender, EventArgs e)
-        {
-            showOnlyMainPanel("staffPanel3");
-            selectClassTypePanel7.Visible = false;
-            searchStaffResultListBox1.DataSource = _employees;
+            SelectClassTypeForm selectClassTypeForm = new SelectClassTypeForm();
+            selectClassTypeForm.ShowDialog();
+            
+            if (selectClassTypeForm.classType == ClassType.Individual)
+            {
+                showOnlyMainPanel("staffPanel3");
+                searchStaffResultListBox1.DataSource = _employees;
+            }
+            else if (selectClassTypeForm.classType == ClassType.Group)
+            {
+                showOnlyMainPanel("schedulePanel1");
+                ShowGroupClasses(_choosedClient);
+            }
         }
 
 
         /// Индивидуальные занятия
-        /*private void showIndividualClasses()
-        {
-            var buttons = individualClassesPanel1.Controls.OfType<Button>().ToArray();
-            foreach (var button in buttons) { individualClassesPanel1.Controls.Remove(button); }
-
-            invidualClassesLabel2.Text = monthCalendar2.SelectionStart.ToString("dd.MM.yy");
-
-            int topMargin = 0; // отступ сверху для первой кнопки
-            bool anyItemContains = false;
-
-            foreach (Class @class in _choosedEmployee.classes)
-            {
-                if (@class.dateTime.Date == monthCalendar2.SelectionStart)
-                {
-                    Button btnClass = new Button();
-                    btnClass.Text = $"{@class.dateTime.ToString("HH:mm")}";
-                    btnClass.Size = new Size(100, 22);
-                    btnClass.Click += (sender, e) => individualClassButtonClick(@class);
-                    btnClass.Location = new Point((individualClassesPanel1.Width-btnClass.Width)/2, topMargin); // каждая кнопка размещается на новой строке
-                    *//*Button btnDeleteClass = new Button();
-                    btnDeleteClass.Text = "Удалить";
-                    btnDeleteClass.Size = new Size(94, 22);
-                    *//*btnDeleteClass.Click += (sender, e) => deleteClass(@class);*//*
-                    btnDeleteClass.Location = new Point(btnClass.Width + 11, topMargin); // каждая кнопка размещается на новой строке*//*
-                    individualClassesPanel1.Controls.Add(btnClass);
-                    *//*searchResultsStaffPanel1.Controls.Add(btnDeleteClass);*//*
-
-                    topMargin += btnClass.Height + 5;
-                    anyItemContains = true;
-                }
-            }
-            if (!anyItemContains) notFoundIndividualClassesLabel3.Visible = true;
-            else notFoundIndividualClassesLabel3.Visible = false;
-        }*/
         private void setUpIndividualClasses()
         {
             invidualClassesLabel2.Text = monthCalendar2.SelectionStart.ToString("dd.MM.yy");
@@ -424,14 +291,19 @@ namespace FitnessCenter
         private void selectEmployeeButton1_Click(object sender, EventArgs e)
         {
             _choosedEmployee = (Employee)searchStaffResultListBox1.SelectedItem;
+
+            if (_choosedEmployee is null) return;
+
             searchStaffPanel1.Visible = false;
             individualClassesPanel2.Visible = true;
             setUpIndividualClasses();
         }
 
-
-        private void individualClassButtonClick(Class @class)
+        private void selectInvidialClassButton2_Click(object sender, EventArgs e)
         {
+            Class @class = (Class)individualClassesListBox2.SelectedItem;
+            if (@class is null) return;
+
             if (_choosedClient is null)
             {
                 _choosedClass = @class;
@@ -439,15 +311,14 @@ namespace FitnessCenter
             }
             else
             {
-                succesRegistrationSchedulePanel2.Visible = true;
                 _choosedClient.appendClass(@class);
                 @class.appendClient(_choosedClient);
-
-                succesLabel1.Text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy HH:mm")}\n" +
-                    $"тренер {_choosedEmployee.name}";
                 _choosedClass = null;
                 _choosedClient = null;
                 _choosedEmployee = null;
+                string text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy HH:mm")}\n" +
+                    $"тренер {_choosedEmployee.name}";
+                this.ShowDialog(new SuccesForm(text));
             }
         }
 
@@ -456,11 +327,6 @@ namespace FitnessCenter
             _choosedEmployee = null;
             individualClassesPanel2.Visible = false;
             searchStaffPanel1.Visible = true;
-        }
-
-        private void backFromSuccesPanelButton1_Click(object sender, EventArgs e)
-        {
-            succesRegistrationSchedulePanel2.Visible = false;
         }
 
         private void searchStaffTextBox1_TextChanged(object sender, EventArgs e)
