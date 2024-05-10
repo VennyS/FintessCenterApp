@@ -14,6 +14,8 @@ namespace FitnessCenter.Resources
 
         public string textForVisits { get { return this.dateTime.ToString("dd.MM.yyyy HH:mm") + $" направление: {this.name.ToLower()}"; } }
 
+        public string textForIndividualClasses { get { return $"{this.name}: {this.dateTime.ToString("HH:mm")}"; } }
+
         public Class() { }
 
         public Class(string name, DateTime dateTime, bool isGroup = true)

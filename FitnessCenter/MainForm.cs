@@ -33,54 +33,67 @@ namespace FitnessCenter
             searchStaffResultListBox1.DataSource = _employees;
         }
 
-        private void showOnlyMainPanel(string target)
+        private void ShowOnlyTargetPanel(Control parentControl, string target)
         {
-            foreach (Control control in this.Controls)
+            foreach (Control control in parentControl.Controls)
             {
-                if ((control is Panel) && (control.Name != target) && (control.Name != "splitter")) control.Visible = false;
-                else control.Visible = true;
+                if ((control is Panel) && (control.Name != target) && (control.Name != "splitter"))
+                {
+                    control.Visible = false;
+                }
+                else
+                {
+                    control.Visible = true;
+                }
             }
         }
 
-        // TODO
-        private void showOnlyClientsPanel(string target) { }
+        private void ShowOnlyMainPanel(string target)
+        {
+            ShowOnlyTargetPanel(this, target);
+        }
+
+        private void ShowOnlyClientsPanel(string target)
+        {
+            ShowOnlyTargetPanel(clientsPanel2, target);
+        }
 
         private void scheduleButton1_Click(object sender, EventArgs e)
         {
             _choosedClient = null;
-            showOnlyMainPanel("schedulePanel1");
+            ShowOnlyMainPanel("schedulePanel1");
             searchStaffPanel1.Visible = true;
         }
 
         private void clientsButton2_Click(object sender, EventArgs e)
         {
             searchResultsClientsListBox1.DataSource = _clients;
-            searchResultsClientsListBox1.DisplayMember = "full_name";
-            showOnlyMainPanel("clientsPanel2");
+            ShowOnlyMainPanel("clientsPanel2");
+            ShowOnlyClientsPanel("showClientsPanel1");
         }
 
         private void staffButton3_Click(object sender, EventArgs e)
         {
             searchStaffResultListBox1.DataSource = _employees;
-            showOnlyMainPanel("staffPanel3");
+            ShowOnlyMainPanel("staffPanel3");
         }
 
         private void analysButton4_Click (object sender, EventArgs e)
         {
-            showOnlyMainPanel("analysisPanel4");
+            ShowOnlyMainPanel("analysisPanel4");
             setUpAnalysis();
         }
 
         /// Групповые занятия
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
-            dateScheduleLabel2.Text = monthCalendar1.SelectionStart.ToString("dd.MM.yyyy");
             timesListBox2.DataSource = null;
             ShowGroupClasses();            
         }
 
         private void ShowGroupClasses(Client client = null)
         {
+            dateScheduleLabel2.Text = monthCalendar1.SelectionStart.ToString("dd.MM.yyyy");
             // Получаем все классы, учитывая параметр client
             var allClasses = client != null ? _classes.Except(client.classes) : _classes;
 
@@ -108,7 +121,6 @@ namespace FitnessCenter
 
             // Отображаем времена для выбранной группы в timesListBox2
             timesListBox2.DataSource = times;
-            timesListBox2.DisplayMember = "dateTime";
         }
 
         private void signUpToGroupClassButton1_Click(object sender, EventArgs e)
@@ -127,7 +139,7 @@ namespace FitnessCenter
             {
                 _choosedClient.appendClass(@class);
                 @class.appendClient(_choosedClient);
-                string text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy HH:mm")}\nнаправление:{@class.name}";
+                string text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy HH:mm")}\nнаправление: {@class.name}";
                 SuccesForm succesForm = new SuccesForm(text);
                 succesForm.ShowDialog();
                 _choosedClient = null;
@@ -139,21 +151,20 @@ namespace FitnessCenter
         /// Клиенты
         private void chooseClientButton2_Click(object sender, EventArgs e)
         {
-            Client choosedClient = (Client)searchResultsClientsListBox1.SelectedItem;
-            if (choosedClient is null) return;
+            _choosedClient = (Client)searchResultsClientsListBox1.SelectedItem;
+            if (_choosedClient is null) return;
 
             if (_choosedClass is null && _choosedEmployee is null)
             {
-                showClientsPanel1.Visible = false;
-                setUpInfoPanel(choosedClient);
-                clientInfoPanel3.Visible = true;
+                setUpInfoPanel(_choosedClient);
+                ShowOnlyClientsPanel("clientInfoPanel3");
             }
             else
             {
-                choosedClient.appendClass(_choosedClass);
-                _choosedClass.appendClient(choosedClient);
-                string variousText = _choosedEmployee is null ? $"направление :{_choosedClass.name}" : $"тренер {_choosedEmployee.name}";
-                string text = $"{choosedClient.full_name}, успешно записан(а)!\n{_choosedClass.dateTime.ToString("dd.MM.yy HH:mm")}\n" + variousText;
+                _choosedClient.appendClass(_choosedClass);
+                _choosedClass.appendClient(_choosedClient);
+                string variousText = _choosedEmployee is null ? $"направление: {_choosedClass.name}" : $"тренер: {_choosedEmployee.name}";
+                string text = $"{_choosedClient.full_name}, успешно записан(а)!\n{_choosedClass.dateTime.ToString("dd.MM.yy HH:mm")}\n" + variousText;
                 SuccesForm succesForm = new SuccesForm(text);
                 succesForm.ShowDialog(this);
                 _choosedClass = null;
@@ -180,24 +191,29 @@ namespace FitnessCenter
 
         private void createClientsButton_Click(object sender, EventArgs e)
         {
-            showClientsPanel1.Visible = false;
-            clientInfoPanel3.Visible = false;
-            newClientPanel2.Visible = true;
-            searchClientsTextBox.Text = "";
+            ShowOnlyClientsPanel("newClientPanel2");
         }
 
         private void backCreatingClientButton2_Click(object sender, EventArgs e)
         {
-            showClientsPanel1.Visible = true;
-            clientInfoPanel3.Visible = false;
-            newClientPanel2.Visible = false;
+            ShowOnlyClientsPanel("showClientsPanel1");
         }
 
         private void newClientButton1_Click(object sender, EventArgs e)
         {
-            showClientsPanel1.Visible = true;
-            clientInfoPanel3.Visible = false;
-            newClientPanel2.Visible = false;
+            if (fullNameTextBox1.Text.Length == 0 || weigthTextBox3.Text.Length == 0 || heigthTextBox4.Text.Length == 0)
+            {
+                MessageBox.Show("Все поля должны быть заполнены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (errorProvider1.GetError(fullNameTextBox1) != "" || errorProvider1.GetError(weigthTextBox3) != "" || errorProvider1.GetError(heigthTextBox4) != "")
+            {
+                MessageBox.Show("Пожалуйста, исправьте все ошибки ввода.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            ShowOnlyClientsPanel("showClientsPanel1");
 
             _clients.Add(new Client(fullNameTextBox1.Text, dateTimePicker1.Value, int.Parse(weigthTextBox3.Text), int.Parse(heigthTextBox4.Text)));
 
@@ -210,10 +226,10 @@ namespace FitnessCenter
         {
             _choosedClient = client;
             clientNameLabel1.Text = _choosedClient.full_name;
-            birthDateLabel2.Text = _choosedClient.date_of_birth.Date.ToString("dd.MM.yyyy");
+            birthDateLabel2.Text = $"дата рождения: {_choosedClient.date_of_birth.Date.ToString("dd.MM.yyyy")}";
             weightLabel3.Text = $"вес: {_choosedClient.weight_kg}";
             heightLabel4.Text = $"рост: {_choosedClient.height_cm}";
-            classesRestLabel5.Text = $"осталось занятий: {_choosedClient.remaining_visits}";
+            classesRestLabel5.Text = $"количество оставшихся занятий: {_choosedClient.remaining_visits}";
 
             Series series = chart1.Series.FindByName("Посещения");
             series.Points.Clear();
@@ -226,8 +242,7 @@ namespace FitnessCenter
 
         private void backFromClientInfoButton4_Click(object sender, EventArgs e)
         {
-            clientInfoPanel3.Visible = false;
-            showClientsPanel1.Visible = true;
+            ShowOnlyClientsPanel("showClientsPanel1");
         }
 
         private void addClasseButton3_Click(object sender, EventArgs e)
@@ -244,8 +259,7 @@ namespace FitnessCenter
 
         private void visitHistoryButton1_Click(object sender, EventArgs e)
         {
-            clientInfoPanel3.Visible = false;
-            visitHistoryPanel6.Visible = true;
+            ShowOnlyClientsPanel("visitHistoryPanel6");
             setUpVisitHistoryPanel();
         }
 
@@ -253,13 +267,11 @@ namespace FitnessCenter
         {
             clientNameLabel2.Text = _choosedClient.full_name;
             visitsShowListBox1.DataSource = _choosedClient.classes;
-            visitsShowListBox1.DisplayMember = "textForVisits";
         }
 
         private void backFromVisitHistoryButton1_Click(object sender, EventArgs e)
         {
-            clientInfoPanel3.Visible = true;
-            visitHistoryPanel6.Visible = false;
+            ShowOnlyClientsPanel("clientInfoPanel3");
         }
 
         private void signUpButton2_Click(object sender, EventArgs e)
@@ -269,12 +281,12 @@ namespace FitnessCenter
             
             if (selectClassTypeForm.classType == ClassType.Individual)
             {
-                showOnlyMainPanel("staffPanel3");
+                ShowOnlyMainPanel("staffPanel3");
                 searchStaffResultListBox1.DataSource = _employees;
             }
             else if (selectClassTypeForm.classType == ClassType.Group)
             {
-                showOnlyMainPanel("schedulePanel1");
+                ShowOnlyMainPanel("schedulePanel1");
                 ShowGroupClasses(_choosedClient);
             }
         }
@@ -307,7 +319,7 @@ namespace FitnessCenter
             if (_choosedClient is null)
             {
                 _choosedClass = @class;
-                showOnlyMainPanel("clientsPanel2");
+                ShowOnlyMainPanel("clientsPanel2");
             }
             else
             {
@@ -317,7 +329,7 @@ namespace FitnessCenter
                 _choosedClient = null;
                 _choosedEmployee = null;
                 string text = $"{_choosedClient.full_name}, успешно записан(а)!\n{@class.dateTime.ToString("dd.MM.yy HH:mm")}\n" +
-                    $"тренер {_choosedEmployee.name}";
+                    $"тренер: {_choosedEmployee.name}";
                 this.ShowDialog(new SuccesForm(text));
             }
         }
@@ -367,9 +379,64 @@ namespace FitnessCenter
                 incomePerMonth.Points.AddXY(pair.Key, pair.Value);
             }
 
+            chart2.Series.Add(incomePerMonth);
             chart2.Series.Add(newClientsPerMonth);
             chart2.Series.Add(averageVisitsPerMonth);
-            chart2.Series.Add(incomePerMonth);
+            
+        }
+
+        private void fullNameTextBox1_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+
+            if (string.IsNullOrWhiteSpace(textBox.Text) && newClientPanel2.Visible)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(textBox, "Это поле не может быть пустым.");
+            }
+            else
+            {
+                errorProvider1.SetError(textBox, ""); // Очистка сообщения об ошибке, если валидация успешна
+            }
+        }
+
+        private void Integers_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            int result;
+
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(textBox, "Это поле не может быть пустым.");
+            }
+            else if (!int.TryParse(textBox.Text, out result))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(textBox, "Пожалуйста, введите целое число.");
+            }
+            else
+            {
+                errorProvider1.SetError(textBox, ""); // Очистка сообщения об ошибке, если валидация успешна
+            }
+        }
+
+        private void newClientPanel2_VisibleChanged(object sender, EventArgs e)
+        {
+            fullNameTextBox1.Text = "";
+            weigthTextBox3.Text = "";
+            heigthTextBox4.Text = "";
+            errorProvider1.Clear();
+        }
+
+        private void deleteVisitButton1_Click(object sender, EventArgs e)
+        {
+            Class @class = (Class)visitsShowListBox1.SelectedItem;
+            if (@class == null) return;
+
+            visitsShowListBox1.DataSource = null;
+            _choosedClient.classes.Remove(@class);
+            visitsShowListBox1.DataSource = _choosedClient.classes;
         }
     }
 }
